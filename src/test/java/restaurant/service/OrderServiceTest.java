@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,7 @@ import restaurant.exception.NoOpenOrderException;
 import restaurant.exception.RestaurantException;
 import restaurant.exception.TableNotAvailableException;
 import restaurant.exception.TableNotFoundException;
+import restaurant.model.Bill;
 import restaurant.model.MenuItem;
 import restaurant.model.Order;
 import restaurant.model.OrderStatus;
@@ -31,6 +33,8 @@ import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
 import restaurant.pricing.NoDiscount;
 import restaurant.pricing.PercentageDiscount;
+import restaurant.repository.BillArchive;
+import restaurant.repository.FileBillArchive;
 import restaurant.repository.InMemoryRepository;
 import restaurant.repository.SampleMenu;
 
@@ -58,11 +62,11 @@ class OrderServiceTest {
         menu = new MenuService(menuRepo);
         orders = new InMemoryRepository<>();
         billFile = dir.resolve("data/hoa-don.txt");
-        service = newService(billFile);
+        service = newService(new FileBillArchive(billFile));
     }
 
-    private OrderService newService(Path file) {
-        return new OrderService(orders, tables, menu, new BillCalculator(), file, CLOCK);
+    private OrderService newService(BillArchive archive) {
+        return new OrderService(orders, tables, menu, new BillCalculator(), archive, CLOCK);
     }
 
     @Test
@@ -149,13 +153,27 @@ class OrderServiceTest {
     @Test
     @DisplayName("Lưu hóa đơn lỗi thì vẫn ghi nhận thanh toán, chỉ báo chưa lưu được")
     void checkoutWhenArchiveFails() throws RestaurantException {
-        OrderService broken = newService(dir);
+        OrderService broken = newService(bill -> {
+            throw new IOException("đĩa đầy");
+        });
         Order order = broken.openOrder(5);
         broken.addItem(5, "F02", 1);
         CheckoutResult result = broken.checkout(5, new NoDiscount());
         assertFalse(result.archived());
         assertEquals(OrderStatus.PAID, order.getStatus());
         assertTrue(tables.find(5).isFree());
+    }
+
+    @Test
+    @DisplayName("Hóa đơn được giao cho BillArchive đúng một lần")
+    void checkoutHandsBillToArchive() throws RestaurantException {
+        List<Bill> saved = new ArrayList<>();
+        OrderService memory = newService(saved::add);
+        memory.openOrder(6);
+        memory.addItem(6, "F01", 1);
+        CheckoutResult result = memory.checkout(6, new NoDiscount());
+        assertEquals(List.of(result.bill()), saved);
+        assertTrue(result.archived());
     }
 
     @Test

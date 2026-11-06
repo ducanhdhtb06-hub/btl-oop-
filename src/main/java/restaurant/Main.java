@@ -11,6 +11,7 @@ import java.util.Scanner;
 import restaurant.model.Order;
 import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
+import restaurant.repository.FileBillArchive;
 import restaurant.repository.FileMenuRepository;
 import restaurant.repository.InMemoryRepository;
 import restaurant.service.MenuService;
@@ -41,7 +42,7 @@ public final class Main {
         MenuService menu = new MenuService(menuRepo);
         TableService tables = new TableService(tableRepo);
         OrderService orders = new OrderService(new InMemoryRepository<Order, Integer>(), tables, menu,
-                new BillCalculator(), Path.of("data", "hoa-don.txt"), Clock.systemDefaultZone());
+                new BillCalculator(), new FileBillArchive(Path.of("data", "hoa-don.txt")), Clock.systemDefaultZone());
 
         new ConsoleMenu(in, out, menu, tables, orders).run();
     }

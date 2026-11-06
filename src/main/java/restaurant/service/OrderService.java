@@ -1,44 +1,35 @@
 package restaurant.service;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import restaurant.common.MoneyFormat;
 import restaurant.exception.EmptyOrderException;
 import restaurant.exception.NoOpenOrderException;
 import restaurant.exception.RestaurantException;
 import restaurant.exception.TableNotAvailableException;
 import restaurant.exception.TableNotFoundException;
 import restaurant.model.Bill;
-import restaurant.model.BillLine;
 import restaurant.model.Order;
 import restaurant.model.OrderItem;
 import restaurant.model.OrderStatus;
 import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
 import restaurant.pricing.DiscountStrategy;
+import restaurant.repository.BillArchive;
 import restaurant.repository.Repository;
 
 /** Nghiệp vụ đơn: mở bàn, gọi món, sửa món, thanh toán, hủy đơn, thống kê. */
 public class OrderService {
 
-    private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
     private final Repository<Order, Integer> orders;
     private final TableService tables;
     private final MenuService menu;
     private final BillCalculator calculator;
-    private final Path billFile;
+    private final BillArchive archive;
     private final Clock clock;
     private int nextOrderId = 1;
 
@@ -49,16 +40,16 @@ public class OrderService {
      * @param tables nghiệp vụ bàn
      * @param menu nghiệp vụ thực đơn
      * @param calculator bộ tính hóa đơn
-     * @param billFile file lưu hóa đơn (ghi thêm vào cuối)
+     * @param archive nơi lưu hóa đơn đã thanh toán
      * @param clock đồng hồ, truyền vào để test có giờ cố định
      */
     public OrderService(Repository<Order, Integer> orders, TableService tables, MenuService menu,
-                        BillCalculator calculator, Path billFile, Clock clock) {
+                        BillCalculator calculator, BillArchive archive, Clock clock) {
         this.orders = orders;
         this.tables = tables;
         this.menu = menu;
         this.calculator = calculator;
-        this.billFile = billFile;
+        this.archive = archive;
         this.clock = clock;
     }
 
@@ -150,7 +141,12 @@ public class OrderService {
         Bill bill = calculator.calculate(order, strategy, LocalDateTime.now(clock));
         order.markPaid();
         order.getTable().release();
-        return new CheckoutResult(bill, writeBill(bill));
+        try {
+            archive.archive(bill);
+            return new CheckoutResult(bill, true);
+        } catch (IOException e) {
+            return new CheckoutResult(bill, false);
+        }
     }
 
     /**
@@ -185,36 +181,5 @@ public class OrderService {
                         .thenComparing(ItemSales::itemName))
                 .limit(limit)
                 .toList();
-    }
-
-    private boolean writeBill(Bill bill) {
-        try {
-            Path parent = billFile.toAbsolutePath().getParent();
-            if (parent != null) {
-                Files.createDirectories(parent);
-            }
-            Files.writeString(billFile, formatBill(bill), UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    private static String formatBill(Bill bill) {
-        StringBuilder text = new StringBuilder();
-        text.append("========== HÓA ĐƠN ==========\n");
-        text.append("Đơn #").append(bill.orderId()).append(" - Bàn ").append(bill.tableNumber())
-                .append(" - ").append(TIME.format(bill.issuedAt())).append('\n');
-        for (BillLine line : bill.lines()) {
-            text.append(line.itemName()).append(" x").append(line.quantity())
-                    .append(" @ ").append(MoneyFormat.format(line.unitPrice()))
-                    .append(" = ").append(MoneyFormat.format(line.lineTotal())).append('\n');
-        }
-        text.append("Tạm tính: ").append(MoneyFormat.format(bill.subtotal())).append('\n');
-        text.append(bill.discountLabel()).append(": ").append(MoneyFormat.format(-bill.discount())).append('\n');
-        text.append("TỔNG CỘNG: ").append(MoneyFormat.format(bill.total())).append('\n');
-        text.append("=============================\n");
-        return text.toString();
     }
 }

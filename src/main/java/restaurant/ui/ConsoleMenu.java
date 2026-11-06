@@ -2,14 +2,12 @@ package restaurant.ui;
 
 import java.io.PrintStream;
 import java.io.UncheckedIOException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import restaurant.common.BillFormatter;
 import restaurant.common.MoneyFormat;
 import restaurant.exception.RestaurantException;
-import restaurant.model.Bill;
-import restaurant.model.BillLine;
 import restaurant.model.ItemType;
 import restaurant.model.MenuItem;
 import restaurant.model.Order;
@@ -30,8 +28,6 @@ import restaurant.service.TableService;
  * Mọi lỗi nghiệp vụ được bắt lại, in thông báo rồi quay về menu chính.
  */
 public class ConsoleMenu {
-
-    private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final Scanner in;
     private final PrintStream out;
@@ -181,24 +177,10 @@ public class ConsoleMenu {
             default -> new NoDiscount();
         };
         CheckoutResult result = orders.checkout(tableNo, strategy);
-        printBill(result.bill());
+        out.print(BillFormatter.format(result.bill()));
         if (!result.archived()) {
             out.println("Cảnh báo: chưa lưu được hóa đơn vào file, thanh toán vẫn được ghi nhận");
         }
-    }
-
-    // Bản M4: ConsoleMenu tự định dạng hóa đơn, lặp lại code trong OrderService (sẽ gom ở M5).
-    private void printBill(Bill bill) {
-        out.println("========== HÓA ĐƠN ==========");
-        out.println("Đơn #" + bill.orderId() + " - Bàn " + bill.tableNumber() + " - " + TIME.format(bill.issuedAt()));
-        for (BillLine line : bill.lines()) {
-            out.println(line.itemName() + " x" + line.quantity() + " @ " + MoneyFormat.format(line.unitPrice())
-                    + " = " + MoneyFormat.format(line.lineTotal()));
-        }
-        out.println("Tạm tính: " + MoneyFormat.format(bill.subtotal()));
-        out.println(bill.discountLabel() + ": " + MoneyFormat.format(-bill.discount()));
-        out.println("TỔNG CỘNG: " + MoneyFormat.format(bill.total()));
-        out.println("=============================");
     }
 
     private void cancelOrder() throws RestaurantException {
