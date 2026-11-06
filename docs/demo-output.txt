@@ -1,0 +1,118 @@
+===== NHÀ HÀNG - HỆ THỐNG GỌI MÓN =====
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: 1. Tất cả  2. Món ăn  3. Đồ uống  4. Món chay  5. Combo
+Chọn: ----- THỰC ĐƠN -----
+C01     49.500 đ  Combo - Combo trưa: Cơm gà + Trà đá (giảm 10%)
+C02     89.250 đ  Combo - Combo chay: Gỏi cuốn chay + Đậu hũ sốt cà chua + Nước cam (giảm 15%)
+D01      5.000 đ  Đồ uống - Trà đá (300 ml)
+D02     25.000 đ  Đồ uống - Cà phê sữa đá (250 ml)
+D03     30.000 đ  Đồ uống - Nước cam (330 ml)
+D04     35.000 đ  Đồ uống - Trà đào (500 ml)  (hết)
+F01     55.000 đ  Món ăn - Phở bò
+F02     50.000 đ  Món ăn - Cơm gà
+F03     50.000 đ  Món ăn - Bún chả
+F04     35.000 đ  Món ăn - Gỏi cuốn chay [chay]
+F05     40.000 đ  Món ăn - Đậu hũ sốt cà chua [chay]
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Đã mở bàn 3 (đơn #1)
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Mã món: Số lượng (1-99): Đã thêm 2 x Phở bò vào bàn 3. Tạm tính: 110.000 đ
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Mã món: Số lượng (1-99): Đã thêm 1 x Trà đá vào bàn 3. Tạm tính: 115.000 đ
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Mã món: Số lượng (1-99): Đã thêm 1 x Combo trưa vào bàn 3. Tạm tính: 164.500 đ
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Mã món: Số lượng (1-99): Lỗi: Món Trà đào đã hết
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Vui lòng nhập một số
+Chọn chức năng: Số bàn: Mã món: Số lượng mới (0 = bớt món): Đã sửa D01 thành 2 phần
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: Đơn #1 - Bàn 3
+Phở bò x2 @ 55.000 đ = 110.000 đ
+Trà đá x2 @ 5.000 đ = 10.000 đ
+Combo trưa x1 @ 49.500 đ = 49.500 đ
+Tạm tính: 169.500 đ
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Số bàn: 1. Không giảm  2. Giảm theo %  3. Giảm số tiền
+Chọn cách giảm giá: Phần trăm giảm (0-100): ========== HÓA ĐƠN ==========
+Đơn #1 - Bàn 3 - 06/11/2026 17:39
+Phở bò x2 @ 55.000 đ = 110.000 đ
+Trà đá x2 @ 5.000 đ = 10.000 đ
+Combo trưa x1 @ 49.500 đ = 49.500 đ
+Tạm tính: 169.500 đ
+Giảm 10%: -16.950 đ
+TỔNG CỘNG: 152.550 đ
+=============================
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: ----- MÓN BÁN CHẠY -----
+1. Phở bò - 2 phần - 110.000 đ
+2. Trà đá - 2 phần - 10.000 đ
+3. Combo trưa - 1 phần - 49.500 đ
+
+1. Xem thực đơn        6. Xem đơn của bàn
+2. Xem tình trạng bàn  7. Thanh toán
+3. Mở bàn              8. Hủy đơn
+4. Gọi món             9. Quản lý thực đơn
+5. Sửa hoặc bớt món    10. Thống kê món bán chạy
+0. Thoát
+Chọn chức năng: Tạm biệt
