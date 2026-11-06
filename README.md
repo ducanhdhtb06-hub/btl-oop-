@@ -1,7 +1,7 @@
 # Restaurant Ordering System
 
 Bài tập lớn môn Lập trình hướng đối tượng (INT1332_CLC, PTIT), **chủ đề 8: hệ thống gọi món nhà hàng**.
-Ứng dụng Java chạy trên console: mở bàn, gọi món, sửa món, thanh toán có giảm giá, hủy đơn, quản lý thực đơn và thống kê món bán chạy.
+Ứng dụng Java có hai giao diện dùng chung một tầng nghiệp vụ: console và Swing. Chức năng: mở bàn, gọi món, sửa món, thanh toán có giảm giá, hủy đơn, quản lý thực đơn và thống kê món bán chạy.
 
 Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering-design.md`](docs/superpowers/specs/2026-11-06-restaurant-ordering-design.md).
 
@@ -18,9 +18,16 @@ Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering
 **Dòng lệnh:**
 
 ```bash
-mvn verify                                # biên dịch, chạy toàn bộ test, đo độ phủ
-java -jar target/restaurant-ordering.jar  # chạy app
+mvn verify                                      # biên dịch, chạy toàn bộ test, đo độ phủ
+java -jar target/restaurant-ordering.jar        # chạy giao diện console
+java -jar target/restaurant-ordering.jar --gui  # chạy giao diện Swing
 ```
+
+Trong IDE, muốn mở giao diện Swing thì thêm tham số `--gui` vào cấu hình chạy của `restaurant.Main`.
+
+Giao diện Swing: chọn bàn ở bảng bên trái, chọn món ở bảng giữa, rồi bấm các nút ở dưới.
+
+![Giao diện Swing](docs/images/swing-don-ban-3.png)
 
 Báo cáo độ phủ test nằm ở `target/site/jacoco/index.html` sau khi chạy `mvn verify`.
 
@@ -54,7 +61,7 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `restaurant.repository` | Lưu trữ: interface `Repository<T, ID>` và `BillArchive`, bản bộ nhớ, bản file |
 | `restaurant.service` | Nghiệp vụ: thực đơn, bàn, đơn |
 | `restaurant.exception` | Lỗi nghiệp vụ, đều kế thừa `RestaurantException` |
-| `restaurant.ui` | Giao diện console (`ConsoleMenu`, `InputReader`) |
+| `restaurant.ui` | Giao diện console (`ConsoleMenu`, `InputReader`) và Swing (`ui.swing.MainWindow`) |
 | `restaurant.common` | Dùng chung: định dạng tiền, định dạng hóa đơn |
 
 ## Các mốc trong git
@@ -64,4 +71,12 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `milestone-4` | Bản cài đặt lõi (Milestone 4) |
 | `milestone-5` | Refactor theo SOLID: Strategy, Factory, BillArchive, InputReader; thêm Combo (Composite) |
 
+| `final` | Thêm giao diện Swing dùng chung service với console |
+
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
+
+Chứng minh thêm giao diện Swing không phải sửa tầng nghiệp vụ (lệnh này in ra rỗng):
+
+```bash
+git diff milestone-5 final --stat -- src/main/java/restaurant/model src/main/java/restaurant/pricing src/main/java/restaurant/repository src/main/java/restaurant/service
+```

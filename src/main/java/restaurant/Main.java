@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.time.Clock;
+import java.util.Arrays;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 import restaurant.model.Order;
 import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
@@ -19,8 +21,12 @@ import restaurant.service.OrderService;
 import restaurant.service.TableService;
 import restaurant.ui.ConsoleMenu;
 import restaurant.ui.InputReader;
+import restaurant.ui.swing.MainWindow;
 
-/** Điểm khởi động: tạo các đối tượng, truyền phụ thuộc vào nhau rồi chạy giao diện console. */
+/**
+ * Điểm khởi động: tạo các đối tượng, truyền phụ thuộc vào nhau rồi chạy giao diện.
+ * Console và Swing dùng chung đúng các service này.
+ */
 public final class Main {
 
     private Main() {
@@ -29,7 +35,7 @@ public final class Main {
     /**
      * Chạy ứng dụng.
      *
-     * @param args không dùng
+     * @param args {@code --gui} để mở giao diện Swing; mặc định chạy console
      */
     public static void main(String[] args) {
         PrintStream out = new PrintStream(new FileOutputStream(FileDescriptor.out), true, UTF_8);
@@ -45,6 +51,10 @@ public final class Main {
         OrderService orders = new OrderService(new InMemoryRepository<Order, Integer>(), tables, menu,
                 new BillCalculator(), new FileBillArchive(Path.of("data", "hoa-don.txt")), Clock.systemDefaultZone());
 
-        new ConsoleMenu(new InputReader(in, out), out, menu, tables, orders).run();
+        if (Arrays.asList(args).contains("--gui")) {
+            SwingUtilities.invokeLater(() -> new MainWindow(menu, tables, orders).show());
+        } else {
+            new ConsoleMenu(new InputReader(in, out), out, menu, tables, orders).run();
+        }
     }
 }
