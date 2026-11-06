@@ -15,7 +15,10 @@ import restaurant.model.MenuItem;
 import restaurant.model.Order;
 import restaurant.model.OrderItem;
 import restaurant.model.Table;
-import restaurant.pricing.DiscountType;
+import restaurant.pricing.DiscountStrategy;
+import restaurant.pricing.FixedAmountDiscount;
+import restaurant.pricing.NoDiscount;
+import restaurant.pricing.PercentageDiscount;
 import restaurant.service.CheckoutResult;
 import restaurant.service.ItemSales;
 import restaurant.service.MenuService;
@@ -172,14 +175,12 @@ public class ConsoleMenu {
         int tableNo = readInt("Số bàn: ", 1, 99);
         out.println("1. Không giảm  2. Giảm theo %  3. Giảm số tiền");
         int kind = readInt("Chọn cách giảm giá: ", 1, 3);
-        CheckoutResult result;
-        if (kind == 2) {
-            result = orders.checkout(tableNo, DiscountType.PERCENT, readInt("Phần trăm giảm (0-100): ", 0, 100));
-        } else if (kind == 3) {
-            result = orders.checkout(tableNo, DiscountType.FIXED, readInt("Số tiền giảm: ", 0, 100_000_000));
-        } else {
-            result = orders.checkout(tableNo, DiscountType.NONE, 0);
-        }
+        DiscountStrategy strategy = switch (kind) {
+            case 2 -> new PercentageDiscount(readInt("Phần trăm giảm (0-100): ", 0, 100));
+            case 3 -> new FixedAmountDiscount(readInt("Số tiền giảm: ", 0, 100_000_000));
+            default -> new NoDiscount();
+        };
+        CheckoutResult result = orders.checkout(tableNo, strategy);
         printBill(result.bill());
         if (!result.archived()) {
             out.println("Cảnh báo: chưa lưu được hóa đơn vào file, thanh toán vẫn được ghi nhận");

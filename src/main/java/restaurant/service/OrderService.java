@@ -26,7 +26,7 @@ import restaurant.model.OrderItem;
 import restaurant.model.OrderStatus;
 import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
-import restaurant.pricing.DiscountType;
+import restaurant.pricing.DiscountStrategy;
 import restaurant.repository.Repository;
 
 /** Nghiệp vụ đơn: mở bàn, gọi món, sửa món, thanh toán, hủy đơn, thống kê. */
@@ -138,17 +138,16 @@ public class OrderService {
      * Lưu hóa đơn lỗi thì vẫn ghi nhận thanh toán.
      *
      * @param tableNo số bàn
-     * @param type cách giảm giá
-     * @param value phần trăm hoặc số tiền giảm, tùy {@code type}
+     * @param strategy cách giảm giá
      * @return hóa đơn và cho biết đã lưu được chưa
      * @throws RestaurantException nếu bàn không có đơn hoặc đơn rỗng
      */
-    public CheckoutResult checkout(int tableNo, DiscountType type, long value) throws RestaurantException {
+    public CheckoutResult checkout(int tableNo, DiscountStrategy strategy) throws RestaurantException {
         Order order = currentOrder(tableNo);
         if (order.isEmpty()) {
             throw new EmptyOrderException(order.getId());
         }
-        Bill bill = calculator.calculate(order, type, value, LocalDateTime.now(clock));
+        Bill bill = calculator.calculate(order, strategy, LocalDateTime.now(clock));
         order.markPaid();
         order.getTable().release();
         return new CheckoutResult(bill, writeBill(bill));

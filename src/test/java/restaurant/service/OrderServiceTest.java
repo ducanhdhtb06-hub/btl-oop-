@@ -29,7 +29,8 @@ import restaurant.model.Order;
 import restaurant.model.OrderStatus;
 import restaurant.model.Table;
 import restaurant.pricing.BillCalculator;
-import restaurant.pricing.DiscountType;
+import restaurant.pricing.NoDiscount;
+import restaurant.pricing.PercentageDiscount;
 import restaurant.repository.InMemoryRepository;
 import restaurant.repository.SampleMenu;
 
@@ -107,7 +108,7 @@ class OrderServiceTest {
     @DisplayName("Thanh toán đơn rỗng bị từ chối, bàn vẫn giữ")
     void checkoutEmptyOrder() throws RestaurantException {
         service.openOrder(3);
-        assertThrows(EmptyOrderException.class, () -> service.checkout(3, DiscountType.NONE, 0));
+        assertThrows(EmptyOrderException.class, () -> service.checkout(3, new NoDiscount()));
         assertFalse(tables.find(3).isFree());
     }
 
@@ -117,7 +118,7 @@ class OrderServiceTest {
         Order order = service.openOrder(3);
         service.addItem(3, "F01", 2);
         service.addItem(3, "D01", 1);
-        CheckoutResult result = service.checkout(3, DiscountType.PERCENT, 10);
+        CheckoutResult result = service.checkout(3, new PercentageDiscount(10));
         assertEquals(103_500, result.bill().total());
         assertTrue(result.archived());
         assertTrue(tables.find(3).isFree());
@@ -137,10 +138,10 @@ class OrderServiceTest {
     void billsAreAppended() throws RestaurantException, IOException {
         service.openOrder(3);
         service.addItem(3, "F01", 1);
-        service.checkout(3, DiscountType.NONE, 0);
+        service.checkout(3, new NoDiscount());
         service.openOrder(3);
         service.addItem(3, "D01", 1);
-        service.checkout(3, DiscountType.NONE, 0);
+        service.checkout(3, new NoDiscount());
         String text = Files.readString(billFile, UTF_8);
         assertEquals(2, text.split("========== HÓA ĐƠN", -1).length - 1);
     }
@@ -151,7 +152,7 @@ class OrderServiceTest {
         OrderService broken = newService(dir);
         Order order = broken.openOrder(5);
         broken.addItem(5, "F02", 1);
-        CheckoutResult result = broken.checkout(5, DiscountType.NONE, 0);
+        CheckoutResult result = broken.checkout(5, new NoDiscount());
         assertFalse(result.archived());
         assertEquals(OrderStatus.PAID, order.getStatus());
         assertTrue(tables.find(5).isFree());
@@ -174,11 +175,11 @@ class OrderServiceTest {
         service.openOrder(1);
         service.addItem(1, "F01", 2);
         service.addItem(1, "D01", 1);
-        service.checkout(1, DiscountType.NONE, 0);
+        service.checkout(1, new NoDiscount());
         service.openOrder(2);
         service.addItem(2, "D01", 2);
         service.addItem(2, "F02", 2);
-        service.checkout(2, DiscountType.NONE, 0);
+        service.checkout(2, new NoDiscount());
         service.openOrder(3);
         service.addItem(3, "F01", 5);
         service.openOrder(4);
