@@ -18,6 +18,7 @@ import restaurant.service.MenuService;
 import restaurant.service.OrderService;
 import restaurant.service.TableService;
 import restaurant.ui.ConsoleMenu;
+import restaurant.ui.InputReader;
 
 /** Điểm khởi động: tạo các đối tượng, truyền phụ thuộc vào nhau rồi chạy giao diện console. */
 public final class Main {
@@ -44,6 +45,6 @@ public final class Main {
         OrderService orders = new OrderService(new InMemoryRepository<Order, Integer>(), tables, menu,
                 new BillCalculator(), new FileBillArchive(Path.of("data", "hoa-don.txt")), Clock.systemDefaultZone());
 
-        new ConsoleMenu(in, out, menu, tables, orders).run();
+        new ConsoleMenu(new InputReader(in, out), out, menu, tables, orders).run();
     }
 }

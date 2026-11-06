@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 import restaurant.common.BillFormatter;
 import restaurant.common.MoneyFormat;
 import restaurant.exception.RestaurantException;
@@ -29,7 +28,7 @@ import restaurant.service.TableService;
  */
 public class ConsoleMenu {
 
-    private final Scanner in;
+    private final InputReader input;
     private final PrintStream out;
     private final MenuService menu;
     private final TableService tables;
@@ -38,14 +37,14 @@ public class ConsoleMenu {
     /**
      * Tạo giao diện console.
      *
-     * @param in nguồn đọc dữ liệu nhập
+     * @param input bộ đọc dữ liệu nhập
      * @param out nơi in kết quả
      * @param menu nghiệp vụ thực đơn
      * @param tables nghiệp vụ bàn
      * @param orders nghiệp vụ đơn
      */
-    public ConsoleMenu(Scanner in, PrintStream out, MenuService menu, TableService tables, OrderService orders) {
-        this.in = in;
+    public ConsoleMenu(InputReader input, PrintStream out, MenuService menu, TableService tables, OrderService orders) {
+        this.input = input;
         this.out = out;
         this.menu = menu;
         this.tables = tables;
@@ -58,7 +57,7 @@ public class ConsoleMenu {
         try {
             while (true) {
                 printMainMenu();
-                int choice = readInt("Chọn chức năng: ", 0, 10);
+                int choice = input.readInt("Chọn chức năng: ", 0, 10);
                 if (choice == 0) {
                     break;
                 }
@@ -70,7 +69,7 @@ public class ConsoleMenu {
                     out.println("Lỗi: " + e.getMessage());
                 }
             }
-        } catch (EndOfInput e) {
+        } catch (InputClosedException e) {
             out.println();
         }
         out.println("Tạm biệt");
@@ -104,7 +103,7 @@ public class ConsoleMenu {
 
     private void showMenu() {
         out.println("1. Tất cả  2. Món ăn  3. Đồ uống  4. Món chay");
-        int filter = readInt("Chọn: ", 1, 4);
+        int filter = input.readInt("Chọn: ", 1, 4);
         List<MenuItem> items = switch (filter) {
             case 2 -> menu.byType(ItemType.FOOD);
             case 3 -> menu.byType(ItemType.DRINK);
@@ -126,24 +125,24 @@ public class ConsoleMenu {
     }
 
     private void openTable() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         Order order = orders.openOrder(tableNo);
         out.println("Đã mở bàn " + tableNo + " (đơn #" + order.getId() + ")");
     }
 
     private void addItem() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         String itemId = readItemId();
-        int quantity = readInt("Số lượng (1-99): ", 1, 99);
+        int quantity = input.readInt("Số lượng (1-99): ", 1, 99);
         orders.addItem(tableNo, itemId, quantity);
         out.println("Đã thêm " + quantity + " x " + menu.find(itemId).getName() + " vào bàn " + tableNo
                 + ". Tạm tính: " + MoneyFormat.format(orders.currentOrder(tableNo).subtotal()));
     }
 
     private void changeItem() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         String itemId = readItemId();
-        int quantity = readInt("Số lượng mới (0 = bớt món): ", 0, 99);
+        int quantity = input.readInt("Số lượng mới (0 = bớt món): ", 0, 99);
         if (quantity == 0) {
             orders.removeItem(tableNo, itemId);
             out.println("Đã bớt món " + itemId);
@@ -154,7 +153,7 @@ public class ConsoleMenu {
     }
 
     private void showOrder() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         Order order = orders.currentOrder(tableNo);
         out.println("Đơn #" + order.getId() + " - Bàn " + tableNo);
         if (order.isEmpty()) {
@@ -168,12 +167,12 @@ public class ConsoleMenu {
     }
 
     private void checkout() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         out.println("1. Không giảm  2. Giảm theo %  3. Giảm số tiền");
-        int kind = readInt("Chọn cách giảm giá: ", 1, 3);
+        int kind = input.readInt("Chọn cách giảm giá: ", 1, 3);
         DiscountStrategy strategy = switch (kind) {
-            case 2 -> new PercentageDiscount(readInt("Phần trăm giảm (0-100): ", 0, 100));
-            case 3 -> new FixedAmountDiscount(readInt("Số tiền giảm: ", 0, 100_000_000));
+            case 2 -> new PercentageDiscount(input.readInt("Phần trăm giảm (0-100): ", 0, 100));
+            case 3 -> new FixedAmountDiscount(input.readInt("Số tiền giảm: ", 0, 100_000_000));
             default -> new NoDiscount();
         };
         CheckoutResult result = orders.checkout(tableNo, strategy);
@@ -184,9 +183,9 @@ public class ConsoleMenu {
     }
 
     private void cancelOrder() throws RestaurantException {
-        int tableNo = readInt("Số bàn: ", 1, 99);
+        int tableNo = input.readInt("Số bàn: ", 1, 99);
         orders.currentOrder(tableNo);
-        if (readYesNo("Hủy đơn của bàn " + tableNo + "? (c/k): ")) {
+        if (input.confirm("Hủy đơn của bàn " + tableNo + "? (c/k): ")) {
             orders.cancel(tableNo);
             out.println("Đã hủy đơn, bàn " + tableNo + " đã trống");
         } else {
@@ -196,25 +195,25 @@ public class ConsoleMenu {
 
     private void manageMenu() throws RestaurantException {
         out.println("1. Thêm món ăn  2. Thêm đồ uống  3. Sửa giá  4. Đánh dấu hết hoặc còn món  0. Quay lại");
-        int choice = readInt("Chọn: ", 0, 4);
+        int choice = input.readInt("Chọn: ", 0, 4);
         switch (choice) {
             case 1 -> {
-                String name = readText("Tên món: ");
-                long price = readInt("Giá: ", 1, 100_000_000);
-                boolean vegetarian = readYesNo("Món chay? (c/k): ");
+                String name = input.readNonBlank("Tên món: ");
+                long price = input.readInt("Giá: ", 1, 100_000_000);
+                boolean vegetarian = input.confirm("Món chay? (c/k): ");
                 MenuItem food = menu.addFood(name, price, vegetarian);
                 out.println("Đã thêm " + food.getId() + " " + food.getName());
             }
             case 2 -> {
-                String name = readText("Tên đồ uống: ");
-                long price = readInt("Giá: ", 1, 100_000_000);
-                int volume = readInt("Dung tích (ml): ", 1, 5_000);
+                String name = input.readNonBlank("Tên đồ uống: ");
+                long price = input.readInt("Giá: ", 1, 100_000_000);
+                int volume = input.readInt("Dung tích (ml): ", 1, 5_000);
                 MenuItem drink = menu.addDrink(name, price, volume);
                 out.println("Đã thêm " + drink.getId() + " " + drink.getName());
             }
             case 3 -> {
                 String itemId = readItemId();
-                long price = readInt("Giá mới: ", 1, 100_000_000);
+                long price = input.readInt("Giá mới: ", 1, 100_000_000);
                 menu.changePrice(itemId, price);
                 out.println("Đã sửa giá " + itemId + " thành " + MoneyFormat.format(price));
             }
@@ -242,59 +241,7 @@ public class ConsoleMenu {
         }
     }
 
-    // Bản M4: ConsoleMenu tự đọc và kiểm tra dữ liệu nhập (sẽ tách ra InputReader ở M5).
-    private int readInt(String prompt, int min, int max) {
-        while (true) {
-            String line = readLine(prompt);
-            try {
-                int value = Integer.parseInt(line);
-                if (value >= min && value <= max) {
-                    return value;
-                }
-                out.println("Vui lòng nhập số từ " + min + " đến " + max);
-            } catch (NumberFormatException e) {
-                out.println("Vui lòng nhập một số");
-            }
-        }
-    }
-
-    private String readText(String prompt) {
-        while (true) {
-            String line = readLine(prompt);
-            if (!line.isEmpty()) {
-                return line;
-            }
-            out.println("Không được để trống");
-        }
-    }
-
     private String readItemId() {
-        return readText("Mã món: ").toUpperCase(Locale.ROOT);
-    }
-
-    private boolean readYesNo(String prompt) {
-        while (true) {
-            String answer = readLine(prompt).toLowerCase(Locale.ROOT);
-            if (answer.equals("c") || answer.equals("có")) {
-                return true;
-            }
-            if (answer.equals("k") || answer.equals("không")) {
-                return false;
-            }
-            out.println("Vui lòng nhập c hoặc k");
-        }
-    }
-
-    private String readLine(String prompt) {
-        out.print(prompt);
-        if (!in.hasNextLine()) {
-            throw new EndOfInput();
-        }
-        return in.nextLine().trim();
-    }
-
-    /** Báo hết dữ liệu nhập để thoát vòng lặp gọn gàng. */
-    private static final class EndOfInput extends RuntimeException {
-        private static final long serialVersionUID = 1L;
+        return input.readNonBlank("Mã món: ").toUpperCase(Locale.ROOT);
     }
 }
