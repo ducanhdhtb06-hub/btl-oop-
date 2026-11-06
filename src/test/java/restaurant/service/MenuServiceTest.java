@@ -77,4 +77,16 @@ class MenuServiceTest {
         assertThrows(MenuItemNotFoundException.class, () -> menu.changePrice("F99", 1));
         assertThrows(IllegalArgumentException.class, () -> menu.changePrice("F01", 0));
     }
+
+    @Test
+    @DisplayName("Bật tắt combo theo cờ của chính combo, kể cả khi món thành phần đang hết")
+    void toggleComboUsesItsOwnFlag() throws MenuItemNotFoundException {
+        menu.setAvailable("D01", false);
+        assertFalse(menu.toggleAvailable("C01"));
+        assertFalse(menu.find("C01").isMarkedAvailable());
+        menu.setAvailable("D01", true);
+        assertFalse(menu.find("C01").isAvailable());
+        assertTrue(menu.toggleAvailable("C01"));
+        assertTrue(menu.find("C01").isAvailable());
+    }
 }

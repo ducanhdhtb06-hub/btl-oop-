@@ -10,6 +10,7 @@ Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering
 - JDK 17 trở lên
 - Maven 3.9 (NetBeans, IntelliJ, Eclipse đều có sẵn Maven)
 - Lần build đầu cần có mạng để Maven tải JUnit và các plugin
+- Nên chạy `mvn verify` một lần trên đúng máy và đúng JDK sẽ dùng khi demo
 
 ## Chạy
 
@@ -43,7 +44,7 @@ Xóa thư mục `data/` trước khi chạy nếu muốn bắt đầu lại từ
 
 | File | Nội dung |
 |---|---|
-| `data/menu.csv` | Thực đơn. Tự tạo từ thực đơn mẫu nếu chưa có. Sửa tay được (UTF-8, phân cách bằng `;`) |
+| `data/menu.csv` | Thực đơn. Tự tạo từ thực đơn mẫu nếu chưa có. Sửa tay được, nhưng phải lưu dạng UTF-8 (trong Excel chọn "CSV UTF-8"), phân cách bằng `;`. Dòng sai bị bỏ qua khi đọc nhưng vẫn giữ nguyên trong file |
 | `data/hoa-don.txt` | Mọi hóa đơn đã thanh toán, ghi nối tiếp |
 
 Đơn đang mở và trạng thái bàn không được lưu khi tắt app.
@@ -72,6 +73,7 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `milestone-5` | Refactor theo SOLID: Strategy, Factory, BillArchive, InputReader; thêm Combo (Composite) |
 
 | `final` | Thêm giao diện Swing dùng chung service với console |
+| `v1.0` | Bản nộp: bản `final` cộng các bản sửa lỗi sau khi review code |
 
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
 

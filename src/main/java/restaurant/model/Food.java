@@ -37,6 +37,6 @@ public final class Food extends SimpleMenuItem {
     @Override
     public String toCsvRow() {
         return String.join(";", "FOOD", getId(), getName(), Long.toString(getPrice()),
-                Boolean.toString(availableFlag()), Boolean.toString(vegetarian));
+                Boolean.toString(isMarkedAvailable()), Boolean.toString(vegetarian));
     }
 }

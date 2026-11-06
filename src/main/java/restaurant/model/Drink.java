@@ -51,6 +51,6 @@ public final class Drink extends SimpleMenuItem {
     @Override
     public String toCsvRow() {
         return String.join(";", "DRINK", getId(), getName(), Long.toString(getPrice()),
-                Boolean.toString(availableFlag()), Integer.toString(volumeMl));
+                Boolean.toString(isMarkedAvailable()), Integer.toString(volumeMl));
     }
 }

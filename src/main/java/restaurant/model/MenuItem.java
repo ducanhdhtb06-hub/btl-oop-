@@ -66,11 +66,12 @@ public abstract class MenuItem implements Identifiable<String> {
     }
 
     /**
-     * Cờ còn món do chính món này giữ, không tính tới món khác. Dùng khi ghi ra file.
+     * Cờ còn món do chính món này giữ, không tính tới món khác (với combo là cờ của riêng combo).
+     * Dùng khi bật tắt món và khi ghi ra file.
      *
      * @return cờ còn món gốc
      */
-    protected final boolean availableFlag() {
+    public final boolean isMarkedAvailable() {
         return available;
     }
 

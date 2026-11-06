@@ -125,6 +125,22 @@ public class MenuService {
         repo.save(item);
     }
 
+    /**
+     * Đảo cờ còn món của chính món đó. Với combo, chỉ đảo cờ của riêng combo; combo vẫn hết
+     * nếu có món thành phần đang hết.
+     *
+     * @param id mã món
+     * @return cờ còn món mới
+     * @throws MenuItemNotFoundException nếu không có món này
+     */
+    public boolean toggleAvailable(String id) throws MenuItemNotFoundException {
+        MenuItem item = find(id);
+        boolean marked = !item.isMarkedAvailable();
+        item.setAvailable(marked);
+        repo.save(item);
+        return marked;
+    }
+
     private String nextId(String prefix) {
         int max = repo.findAll().stream()
                 .map(MenuItem::getId)

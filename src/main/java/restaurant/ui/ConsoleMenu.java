@@ -220,9 +220,14 @@ public class ConsoleMenu {
             }
             case 4 -> {
                 String itemId = readItemId();
-                boolean available = !menu.find(itemId).isAvailable();
-                menu.setAvailable(itemId, available);
-                out.println(itemId + (available ? " đã còn món" : " đã hết món"));
+                boolean marked = menu.toggleAvailable(itemId);
+                if (!marked) {
+                    out.println(itemId + " đã đánh dấu hết món");
+                } else if (menu.find(itemId).isAvailable()) {
+                    out.println(itemId + " đã mở bán lại");
+                } else {
+                    out.println(itemId + " đã bật bán, nhưng vẫn hết vì có món thành phần đang hết");
+                }
             }
             default -> out.println("Quay lại menu chính");
         }

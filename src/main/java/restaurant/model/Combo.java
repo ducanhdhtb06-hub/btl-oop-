@@ -88,6 +88,6 @@ public final class Combo extends MenuItem {
     public String toCsvRow() {
         String ids = components.stream().map(MenuItem::getId).collect(Collectors.joining("|"));
         return String.join(";", "COMBO", getId(), getName(), Integer.toString(discountPercent),
-                Boolean.toString(availableFlag()), ids);
+                Boolean.toString(isMarkedAvailable()), ids);
     }
 }
