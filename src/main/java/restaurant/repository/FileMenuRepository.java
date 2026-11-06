@@ -13,9 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import restaurant.model.Drink;
-import restaurant.model.Food;
 import restaurant.model.MenuItem;
+import restaurant.model.MenuItemFactory;
 
 /**
  * Lưu thực đơn trong file CSV (UTF-8, phân cách bằng {@code ;}). Đọc cả file khi khởi tạo,
@@ -101,7 +100,7 @@ public class FileMenuRepository implements Repository<MenuItem, String> {
                     continue;
                 }
                 try {
-                    MenuItem item = parseRow(row);
+                    MenuItem item = MenuItemFactory.fromCsvRow(row, id -> Optional.ofNullable(items.get(id)));
                     if (items.containsKey(item.getId())) {
                         warnings.add("Dòng " + lineNo + ": trùng mã " + item.getId() + " với dòng phía trên, bỏ qua");
                     } else {
@@ -112,45 +111,6 @@ public class FileMenuRepository implements Repository<MenuItem, String> {
                 }
             }
         }
-    }
-
-    private MenuItem parseRow(String row) {
-        String[] cols = row.split(";", -1);
-        if (cols.length != 6) {
-            throw new IllegalArgumentException("cần 6 cột nhưng có " + cols.length);
-        }
-        String type = cols[0].trim();
-        String id = cols[1].trim();
-        String name = cols[2].trim();
-        long value = parseLong(cols[3]);
-        boolean available = parseBoolean(cols[4]);
-        switch (type) {
-            case "FOOD":
-                return new Food(id, name, value, available, parseBoolean(cols[5]));
-            case "DRINK":
-                return new Drink(id, name, value, available, (int) parseLong(cols[5]));
-            default:
-                throw new IllegalArgumentException("loại món không hợp lệ: " + type);
-        }
-    }
-
-    private static long parseLong(String text) {
-        try {
-            return Long.parseLong(text.trim());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("số không hợp lệ: " + text, e);
-        }
-    }
-
-    private static boolean parseBoolean(String text) {
-        String value = text.trim();
-        if (value.equals("true")) {
-            return true;
-        }
-        if (value.equals("false")) {
-            return false;
-        }
-        throw new IllegalArgumentException("giá trị phải là true hoặc false: " + text);
     }
 
     private void writeAll() throws IOException {
