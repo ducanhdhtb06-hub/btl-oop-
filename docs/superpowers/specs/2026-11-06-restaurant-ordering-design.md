@@ -52,7 +52,7 @@ Gói gốc: `restaurant`. `Main` nằm ở gói gốc, tự tạo các đối t�
 ### 5.1 `restaurant.model`
 
 - `Identifiable<ID>` (interface): `ID getId()`.
-- `MenuItem` (lớp trừu tượng, implements `Identifiable<String>`): `id`, `name`, `available`. Phương thức trừu tượng: `long getPrice()`, `ItemType getType()`, `String describe()`, `String toCsvRow()`. `equals`/`hashCode` theo `id`.
+- `MenuItem` (lớp trừu tượng, implements `Identifiable<String>`): `id`, `name`, `available`. Phương thức trừu tượng: `long getPrice()`, `ItemType getType()`, `String describe()`, `String toCsvRow()`. `isVegetarian()` mặc định trả về `false`: `Food` trả về đúng giá trị của nó, `Drink` trả về `true` (đồ uống không có thịt), `Combo` chỉ là chay khi mọi món thành phần đều chay. Bộ lọc "món chay" ở menu chỉ hiện món ăn và combo chay, không hiện đồ uống. `equals`/`hashCode` theo `id`. Tên món không được rỗng và không được chứa `;` hay ký tự xuống dòng, vì sẽ làm hỏng file CSV.
 - `SimpleMenuItem` (lớp trừu tượng, extends `MenuItem`): thêm `price` và `changePrice(long)`. Là lớp cha của món đơn.
 - `Food` (extends `SimpleMenuItem`): thêm `vegetarian`.
 - `Drink` (extends `SimpleMenuItem`): thêm `volumeMl`.
@@ -94,7 +94,7 @@ DRINK;D01;Trà đá;5000;true;300          <- value = giá, detail = dung tích 
 COMBO;C01;Combo trưa;10;true;F02|D01    <- value = % giảm, detail = mã món thành phần
 ```
 
-Các món thành phần của combo phải nằm ở dòng phía trên combo đó. Thiếu file thì app tự tạo thực đơn mẫu khoảng 10 món. Dòng sai định dạng thì bỏ qua và báo số dòng.
+Các món thành phần của combo phải nằm ở dòng phía trên combo đó. Thiếu file (kể cả thiếu thư mục `data/`) thì app tự tạo thư mục và thực đơn mẫu khoảng 10 món. Dòng sai định dạng, dòng trùng mã với dòng phía trên, hoặc combo có mã thành phần không tồn tại thì bị bỏ qua và báo kèm số dòng.
 
 ### 5.4 `restaurant.service`
 
@@ -117,11 +117,14 @@ Lỗi do lập trình sai (tham số null, % giảm ngoài khoảng) dùng `Ille
 
 ### 5.6 `restaurant.ui`
 
-- `ConsoleMenu`: vòng lặp menu, gọi service, bắt `RestaurantException` rồi in thông báo tiếng Việt.
-- `InputReader`: đọc số nguyên trong khoảng và đọc chuỗi khác rỗng. Nhập sai thì hỏi lại. Nhận `Scanner` từ bên ngoài để test được.
-- `BillPrinter`: định dạng hóa đơn và thực đơn thành chữ.
+- `ConsoleMenu`: vòng lặp menu, gọi service, bắt `RestaurantException` và `IllegalArgumentException` rồi in thông báo tiếng Việt.
+- `InputReader` (bản Milestone 5): đọc số nguyên trong khoảng, đọc chuỗi khác rỗng, hỏi xác nhận c/k. Tự bỏ khoảng trắng thừa. Nhập sai thì hỏi lại. Hết dữ liệu nhập (luồng vào bị đóng) thì báo `InputClosedException` để app thoát gọn, không bị lặp vô hạn. Nhận `Scanner` từ bên ngoài để test được.
+
+### 5.6b `restaurant.common`
+
 - `MoneyFormat`: `format(185000)` trả về `"185.000 đ"`, không phụ thuộc cài đặt ngôn ngữ của máy.
-- `restaurant.ui.swing.MainWindow` (bản Final): một `JFrame` gồm bảng bàn (`JTable`), bảng thực đơn, bảng đơn của bàn đang chọn, và các nút Mở bàn, Gọi món, Bớt món, Thanh toán (chọn cách giảm giá bằng `JComboBox`), Hủy đơn. Lỗi nghiệp vụ hiện bằng `JOptionPane`. Chỉ gọi các service sẵn có, không thêm logic nghiệp vụ. `Main` nhận tham số `--gui` để mở Swing, mặc định mở console.
+- `BillFormatter` (bản Milestone 5): biến `Bill` thành văn bản. Console và `FileBillArchive` cùng dùng, để không phải viết hai lần.
+- `restaurant.ui.swing.MainWindow` (bản Final): giữ một `JFrame` bên trong (composition, không kế thừa `JFrame`), gồm bảng bàn (`JTable`), bảng thực đơn, bảng đơn của bàn đang chọn, và các nút Mở bàn, Gọi món, Bớt món, Thanh toán (chọn cách giảm giá bằng `JComboBox`), Hủy đơn. Lỗi nghiệp vụ hiện bằng `JOptionPane`. Chỉ gọi các service sẵn có, không thêm logic nghiệp vụ. `Main` nhận tham số `--gui` để mở Swing, mặc định mở console.
 
 ### 5.7 Quan hệ và multiplicity (dùng cho class diagram)
 
@@ -159,8 +162,8 @@ Lỗi do lập trình sai (tham số null, % giảm ngoài khoảng) dùng `Ille
 
 1. Giảm giá dùng `enum DiscountType` và if-else bên trong `BillCalculator`.
 2. `FileMenuRepository` tạo món bằng `switch` ngay trong hàm đọc file.
-3. `OrderService` tự ghi hóa đơn ra file.
-4. `ConsoleMenu` tự đọc input và tự định dạng hóa đơn.
+3. `OrderService` tự định dạng và tự ghi hóa đơn ra file, còn `ConsoleMenu` định dạng hóa đơn thêm một lần nữa (code bị lặp).
+4. `ConsoleMenu` tự đọc input.
 
 Chưa có `Combo`.
 
@@ -168,8 +171,8 @@ Chưa có `Combo`.
 
 1. if-else → `DiscountStrategy` (nguyên tắc O, pattern Strategy).
 2. `switch` → `MenuItemFactory` (pattern Factory).
-3. Ghi file → `BillArchive` (nguyên tắc D và S).
-4. Tách `InputReader` và `BillPrinter` khỏi `ConsoleMenu` (nguyên tắc S).
+3. Ghi file → `BillArchive`, gom phần định dạng bị lặp vào `BillFormatter` (nguyên tắc D, S và DRY).
+4. Tách `InputReader` khỏi `ConsoleMenu` (nguyên tắc S).
 
 Sau đó thêm `Combo` (pattern Composite) mà không phải sửa `Order` hay `BillCalculator` (minh họa nguyên tắc O và L).
 
