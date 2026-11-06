@@ -1,0 +1,7 @@
+target/
+data/
+.superpowers/
+.idea/
+*.iml
+nbproject/
+.vscode/
