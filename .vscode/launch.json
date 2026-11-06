@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "1. Giao diện Swing",
+            "request": "launch",
+            "mainClass": "restaurant.Main",
+            "projectName": "restaurant-ordering",
+            "args": "--gui",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "java",
+            "name": "2. Console",
+            "request": "launch",
+            "mainClass": "restaurant.Main",
+            "projectName": "restaurant-ordering",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "java",
+            "name": "3. Demo tự động (console)",
+            "request": "launch",
+            "mainClass": "restaurant.Main",
+            "projectName": "restaurant-ordering",
+            "args": "--demo",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

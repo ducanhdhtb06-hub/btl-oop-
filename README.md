@@ -12,6 +12,18 @@ Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering
 - Lần build đầu cần có mạng để Maven tải JUnit và các plugin
 - Nên chạy `mvn verify` một lần trên đúng máy và đúng JDK sẽ dùng khi demo
 
+## Chạy bằng VS Code (khuyên dùng khi demo)
+
+1. Cài JDK 17 trở lên và extension **Extension Pack for Java** (VS Code sẽ tự gợi ý khi mở thư mục).
+2. **File → Open Folder** → chọn thư mục `restaurant-ordering`. Đợi góc dưới báo Java đã tải xong dự án (lần đầu cần mạng để tải JUnit).
+3. Bấm biểu tượng **Run and Debug** (Ctrl+Shift+D) ở thanh bên trái, chọn một cấu hình rồi bấm nút ▶ (hoặc F5):
+   - **1. Giao diện Swing**: mở cửa sổ quản lý
+   - **2. Console**: chạy menu chữ trong terminal của VS Code
+   - **3. Demo tự động (console)**: app tự chạy hết `scripts/demo-input.txt`
+4. Chạy test: bấm biểu tượng ống nghiệm (Testing) ở thanh bên trái → Run All Tests.
+
+Nếu terminal trên Windows hiện sai dấu tiếng Việt, gõ `chcp 65001` trong terminal rồi chạy lại.
+
 ## Chạy
 
 **Trong IDE:** mở thư mục dự án như một dự án Maven, chạy lớp `restaurant.Main`.
@@ -22,6 +34,7 @@ Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering
 mvn verify                                      # biên dịch, chạy toàn bộ test, đo độ phủ
 java -jar target/restaurant-ordering.jar        # chạy giao diện console
 java -jar target/restaurant-ordering.jar --gui  # chạy giao diện Swing
+java -jar target/restaurant-ordering.jar --demo # console tự chạy kịch bản demo
 ```
 
 Trong IDE, muốn mở giao diện Swing thì thêm tham số `--gui` vào cấu hình chạy của `restaurant.Main`.
@@ -74,6 +87,7 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 
 | `final` | Thêm giao diện Swing dùng chung service với console |
 | `v1.0` | Bản nộp: bản `final` cộng các bản sửa lỗi sau khi review code |
+| `v1.1` | Thêm cấu hình chạy cho VS Code và tham số `--demo` |
 
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
 
