@@ -31,7 +31,7 @@ class MenuServiceTest {
     @DisplayName("Liệt kê thực đơn theo mã và lọc theo loại")
     void listAndFilter() {
         assertEquals(SampleMenu.items().size(), menu.all().size());
-        assertEquals("D01", menu.all().get(0).getId());
+        assertEquals("C01", menu.all().get(0).getId());
         assertEquals(4, menu.byType(ItemType.DRINK).size());
         assertTrue(menu.byType(ItemType.FOOD).stream().allMatch(i -> i.getType() == ItemType.FOOD));
     }
@@ -39,7 +39,7 @@ class MenuServiceTest {
     @Test
     @DisplayName("Lọc món chay không hiện đồ uống")
     void vegetarianExcludesDrinks() {
-        assertEquals(List.of("F04", "F05"), menu.vegetarian().stream().map(MenuItem::getId).toList());
+        assertEquals(List.of("C02", "F04", "F05"), menu.vegetarian().stream().map(MenuItem::getId).toList());
     }
 
     @Test
@@ -56,6 +56,13 @@ class MenuServiceTest {
         assertEquals("D05", menu.addDrink("Sinh tố bơ", 40_000, 400).getId());
         assertTrue(repo.findById("F06").isPresent());
         assertEquals("F01", new MenuService(new InMemoryRepository<>()).addFood("Món đầu", 1, false).getId());
+    }
+
+    @Test
+    @DisplayName("Lọc được combo; combo không sửa giá trực tiếp được")
+    void comboFilterAndPrice() {
+        assertEquals(List.of("C01", "C02"), menu.byType(ItemType.COMBO).stream().map(MenuItem::getId).toList());
+        assertThrows(IllegalArgumentException.class, () -> menu.changePrice("C01", 1_000));
     }
 
     @Test

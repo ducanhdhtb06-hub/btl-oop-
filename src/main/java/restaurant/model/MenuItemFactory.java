@@ -1,5 +1,7 @@
 package restaurant.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -33,8 +35,22 @@ public final class MenuItemFactory {
         return switch (type) {
             case "FOOD" -> new Food(id, name, value, available, parseBoolean(cols[5]));
             case "DRINK" -> new Drink(id, name, value, available, (int) parseLong(cols[5]));
+            case "COMBO" -> new Combo(id, name, available, (int) value, components(cols[5], lookup));
             default -> throw new IllegalArgumentException("loại món không hợp lệ: " + type);
         };
+    }
+
+    private static List<MenuItem> components(String ids, Function<String, Optional<MenuItem>> lookup) {
+        List<MenuItem> items = new ArrayList<>();
+        for (String id : ids.split("\\|")) {
+            String key = id.trim();
+            if (key.isEmpty()) {
+                continue;
+            }
+            items.add(lookup.apply(key).orElseThrow(
+                    () -> new IllegalArgumentException("không có món " + key + " ở các dòng phía trên")));
+        }
+        return items;
     }
 
     private static long parseLong(String text) {

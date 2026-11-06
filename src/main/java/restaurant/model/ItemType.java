@@ -5,5 +5,7 @@ public enum ItemType {
     /** Món ăn. */
     FOOD,
     /** Đồ uống. */
-    DRINK
+    DRINK,
+    /** Combo gồm nhiều món. */
+    COMBO
 }

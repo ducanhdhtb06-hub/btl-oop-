@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
@@ -45,5 +47,20 @@ class MenuItemFactoryTest {
         assertThrows(IllegalArgumentException.class, () -> MenuItemFactory.fromCsvRow("FOOD;F01;Thiếu", none));
         assertThrows(IllegalArgumentException.class, () -> MenuItemFactory.fromCsvRow("DRINK;D01;Trà;abc;true;300", none));
         assertThrows(IllegalArgumentException.class, () -> MenuItemFactory.fromCsvRow("FOOD;F01;Phở;1;yes;false", none));
+    }
+
+    @Test
+    @DisplayName("Factory tạo combo từ mã các món thành phần đã đọc trước")
+    void createsCombo() {
+        Food comGa = new Food("F02", "Cơm gà", 50_000, true, false);
+        Drink traDa = new Drink("D01", "Trà đá", 5_000, true, 300);
+        Function<String, Optional<MenuItem>> lookup =
+                id -> Optional.ofNullable(Map.<String, MenuItem>of("F02", comGa, "D01", traDa).get(id));
+        Combo combo = assertInstanceOf(Combo.class,
+                MenuItemFactory.fromCsvRow("COMBO;C01;Combo trưa;10;true;F02|D01", lookup));
+        assertEquals(49_500, combo.getPrice());
+        assertEquals(List.of(comGa, traDa), combo.getComponents());
+        assertThrows(IllegalArgumentException.class,
+                () -> MenuItemFactory.fromCsvRow("COMBO;C03;Hỏng;10;true;F02|F99", lookup));
     }
 }

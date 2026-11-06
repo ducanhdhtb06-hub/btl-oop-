@@ -49,16 +49,19 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 
 | Gói | Vai trò |
 |---|---|
-| `restaurant.model` | Các lớp dữ liệu: `MenuItem` và lớp con, `Table`, `Order`, `OrderItem`, `Bill` |
-| `restaurant.pricing` | Tính hóa đơn và giảm giá |
-| `restaurant.repository` | Lưu trữ: interface `Repository<T, ID>`, bản bộ nhớ, bản file CSV |
+| `restaurant.model` | Các lớp dữ liệu: `MenuItem` và lớp con (`Food`, `Drink`, `Combo`), `MenuItemFactory`, `Table`, `Order`, `OrderItem`, `Bill` |
+| `restaurant.pricing` | Tính hóa đơn; các cách giảm giá theo pattern Strategy |
+| `restaurant.repository` | Lưu trữ: interface `Repository<T, ID>` và `BillArchive`, bản bộ nhớ, bản file |
 | `restaurant.service` | Nghiệp vụ: thực đơn, bàn, đơn |
 | `restaurant.exception` | Lỗi nghiệp vụ, đều kế thừa `RestaurantException` |
-| `restaurant.ui` | Giao diện console |
-| `restaurant.common` | Tiện ích dùng chung (định dạng tiền) |
+| `restaurant.ui` | Giao diện console (`ConsoleMenu`, `InputReader`) |
+| `restaurant.common` | Dùng chung: định dạng tiền, định dạng hóa đơn |
 
 ## Các mốc trong git
 
 | Tag | Nội dung |
 |---|---|
 | `milestone-4` | Bản cài đặt lõi (Milestone 4) |
+| `milestone-5` | Refactor theo SOLID: Strategy, Factory, BillArchive, InputReader; thêm Combo (Composite) |
+
+Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.

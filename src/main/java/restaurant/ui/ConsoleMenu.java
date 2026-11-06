@@ -102,18 +102,19 @@ public class ConsoleMenu {
     }
 
     private void showMenu() {
-        out.println("1. Tất cả  2. Món ăn  3. Đồ uống  4. Món chay");
-        int filter = input.readInt("Chọn: ", 1, 4);
+        out.println("1. Tất cả  2. Món ăn  3. Đồ uống  4. Món chay  5. Combo");
+        int filter = input.readInt("Chọn: ", 1, 5);
         List<MenuItem> items = switch (filter) {
             case 2 -> menu.byType(ItemType.FOOD);
             case 3 -> menu.byType(ItemType.DRINK);
             case 4 -> menu.vegetarian();
+            case 5 -> menu.byType(ItemType.COMBO);
             default -> menu.all();
         };
         out.println("----- THỰC ĐƠN -----");
         for (MenuItem item : items) {
-            out.printf("%-4s %-45s %12s%s%n", item.getId(), item.describe(),
-                    MoneyFormat.format(item.getPrice()), item.isAvailable() ? "" : "  (hết)");
+            out.printf("%-4s %11s  %s%s%n", item.getId(), MoneyFormat.format(item.getPrice()),
+                    item.describe(), item.isAvailable() ? "" : "  (hết)");
         }
     }
 
