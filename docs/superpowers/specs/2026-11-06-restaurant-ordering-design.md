@@ -11,13 +11,13 @@ Coi là xong khi:
 - Chạy trọn luồng: mở bàn → gọi món → thanh toán có giảm giá → in và lưu hóa đơn.
 - Mỗi tiêu chí chấm có ít nhất một chỗ trong code chỉ ra được (bảng ở mục 9).
 - Toàn bộ test JUnit qua (`mvn test`), kịch bản demo chạy thành công.
-- Có hai mốc code thật trong git: bản Milestone 4 (đơn giản) và bản Milestone 5 (đã refactor), để báo cáo có ví dụ trước và sau.
+- Có ba mốc code thật trong git: bản Milestone 4 (đơn giản), bản Milestone 5 (đã refactor, có ví dụ trước và sau cho báo cáo) và bản Final (thêm Swing dùng chung service).
 
 ## 2. Phạm vi
 
-Trong phạm vi: các chức năng ở mục 4, lưu thực đơn và hóa đơn ra file.
+Trong phạm vi: các chức năng ở mục 4, lưu thực đơn và hóa đơn ra file. Ở bản Final có thêm giao diện Swing chạy chung tầng service với console (mục 8). Nếu hết thời gian thì bỏ phần Swing, app console vẫn hoàn chỉnh.
 
-Ngoài phạm vi (cố ý không làm): giao diện đồ họa, đăng nhập và phân quyền, lưu đơn đang mở khi tắt app, xóa món khỏi thực đơn, VAT và phí phục vụ, đa luồng.
+Ngoài phạm vi (cố ý không làm): đăng nhập và phân quyền, cơ sở dữ liệu, lưu đơn đang mở khi tắt app, xóa món khỏi thực đơn, VAT và phí phục vụ, đa luồng. Báo cáo có mục giải thích vì sao không dùng Singleton, Observer và thread.
 
 Ràng buộc kỹ thuật: Java 17 (biên dịch với `--release 17`), Maven, JUnit 5, JaCoCo. Không dùng thư viện ngoài cho code chính. Đọc ghi file và console dùng UTF-8.
 
@@ -121,6 +121,7 @@ Lỗi do lập trình sai (tham số null, % giảm ngoài khoảng) dùng `Ille
 - `InputReader`: đọc số nguyên trong khoảng và đọc chuỗi khác rỗng. Nhập sai thì hỏi lại. Nhận `Scanner` từ bên ngoài để test được.
 - `BillPrinter`: định dạng hóa đơn và thực đơn thành chữ.
 - `MoneyFormat`: `format(185000)` trả về `"185.000 đ"`, không phụ thuộc cài đặt ngôn ngữ của máy.
+- `restaurant.ui.swing.MainWindow` (bản Final): một `JFrame` gồm bảng bàn (`JTable`), bảng thực đơn, bảng đơn của bàn đang chọn, và các nút Mở bàn, Gọi món, Bớt món, Thanh toán (chọn cách giảm giá bằng `JComboBox`), Hủy đơn. Lỗi nghiệp vụ hiện bằng `JOptionPane`. Chỉ gọi các service sẵn có, không thêm logic nghiệp vụ. `Main` nhận tham số `--gui` để mở Swing, mặc định mở console.
 
 ### 5.7 Quan hệ và multiplicity (dùng cho class diagram)
 
@@ -172,6 +173,8 @@ Chưa có `Combo`.
 
 Sau đó thêm `Combo` (pattern Composite) mà không phải sửa `Order` hay `BillCalculator` (minh họa nguyên tắc O và L).
 
+**Bản Final** (tag `final`): thêm `MainWindow` (Swing) dùng chung các service với `ConsoleMenu`, đúng thiết kế "ConsoleUI + SwingUI" ở cuối Chapter 10. Phải chứng minh được bằng `git diff` rằng không file nào trong `model`, `pricing`, `repository`, `service` bị sửa ở bước này (minh họa nguyên tắc O và D ở cấp kiến trúc).
+
 ## 9. Đối chiếu 10 tiêu chí chấm
 
 | Tiêu chí | Bằng chứng |
@@ -183,9 +186,9 @@ Sau đó thêm `Combo` (pattern Composite) mà không phải sửa `Order` hay `
 | 5. Kế thừa, đa hình | Cây `MenuItem` ba cấp; `getPrice()`, `describe()`, `toCsvRow()` được viết lại; overloading `addItem` |
 | 6. Interface, trừu tượng | `MenuItem` và `SimpleMenuItem` trừu tượng; interface `DiscountStrategy`, `Repository`, `BillArchive`, `Identifiable` |
 | 7. Collections, generics, exception | `List`, `Map`, `Optional`, stream; `Repository<T extends Identifiable<ID>, ID>`; 9 exception tự định nghĩa |
-| 8. SOLID, design patterns | Trước và sau ở mục 8; Strategy, Factory, Composite |
-| 9. Chất lượng code, kiểm thử | Khoảng 40 test JUnit, độ phủ từ JaCoCo, tên test tiếng Việt |
-| 10. Demo, thuyết trình | Kịch bản demo (mục 10.3), danh sách câu hỏi dự kiến |
+| 8. SOLID, design patterns | Trước và sau ở mục 8; Strategy, Factory, Composite; console và Swing dùng chung service; mục "những gì cố ý không dùng" |
+| 9. Chất lượng code, kiểm thử | Hơn 40 test JUnit, độ phủ JaCoCo từ 80% trở lên (không tính gói `ui`), build không cảnh báo, Javadoc cho lớp public, README |
+| 10. Demo, thuyết trình | Kịch bản demo (mục 10.3), video dự phòng, slide đối chiếu tiêu chí, danh sách câu hỏi dự kiến |
 
 ## 10. Kiểm thử
 
@@ -210,4 +213,15 @@ Xem thực đơn → mở bàn 3 → gọi phở ×2, combo ×1 → thử gọi 
 
 - Tắt app thì mất đơn đang mở và trạng thái bàn. Chỉ thực đơn và hóa đơn được lưu.
 - Cửa sổ cmd của Windows có thể hiện sai tiếng Việt có dấu. Trong IntelliJ và NetBeans thì thường hiện đúng.
-- Nếu thầy yêu cầu GUI, có thể thêm một lớp Swing ở gói `ui` mà không phải sửa service.
+- Phần Swing không có test tự động. Chỉ kiểm tra bằng cách chạy tay theo kịch bản demo.
+
+## 12. Phân công gợi ý (nhóm 4 người)
+
+| Thành viên | Gói phụ trách | Phần báo cáo |
+|---|---|---|
+| 1 | `model` (kể cả `Combo`) | Tiêu chí 3, 4, 5 |
+| 2 | `pricing`, `repository` | Tiêu chí 6, 7 |
+| 3 | `service`, các test | Tiêu chí 8, 9 |
+| 4 | `ui` (console và Swing) | Tiêu chí 1, 2, 10 |
+
+Nhóm 3 người thì gộp việc của thành viên 2 và 3. Mỗi người tự commit phần mình làm, và trình bày phần đó khi thuyết trình.
