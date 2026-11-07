@@ -14,6 +14,18 @@ Thiết kế chi tiết: [`docs/superpowers/specs/2026-11-06-restaurant-ordering
 
 ## Chạy bằng VS Code (khuyên dùng khi demo)
 
+**Cách nhanh nhất:** trong khung Explorer bên trái, mở một trong 3 file sau ở `src/main/java/restaurant/`, rồi bấm nút **Run** (▶) ở góc trên bên phải hoặc chữ **Run** phía trên hàm `main`:
+
+| File | Chạy gì |
+|---|---|
+| `ChayGiaoDien.java` | Giao diện cửa sổ (Swing) |
+| `ChayConsole.java` | Giao diện dòng lệnh |
+| `ChayDemo.java` | Console tự chạy kịch bản demo |
+
+Ngoài VS Code (Ubuntu): chuột phải `chay-giao-dien.sh`, `chay-console.sh` hoặc `chay-demo.sh` → **Run as a Program**.
+
+Hoặc dùng cấu hình có sẵn:
+
 1. Cài JDK 17 trở lên và extension **Extension Pack for Java** (VS Code sẽ tự gợi ý khi mở thư mục).
 2. **File → Open Folder** → chọn thư mục `restaurant-ordering`. Đợi góc dưới báo Java đã tải xong dự án (lần đầu cần mạng để tải JUnit).
 3. Bấm biểu tượng **Run and Debug** (Ctrl+Shift+D) ở thanh bên trái, chọn một cấu hình rồi bấm nút ▶ (hoặc F5):
@@ -88,6 +100,7 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `final` | Thêm giao diện Swing dùng chung service với console |
 | `v1.0` | Bản nộp: bản `final` cộng các bản sửa lỗi sau khi review code |
 | `v1.1` | Thêm cấu hình chạy cho VS Code và tham số `--demo` |
+| `v1.2` | Thêm file bấm là chạy: `ChayGiaoDien`, `ChayConsole`, `ChayDemo` và các file `.sh` |
 
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
 
