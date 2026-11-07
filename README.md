@@ -90,6 +90,10 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `restaurant.ui` | Giao diện console (`ConsoleMenu`, `InputReader`) và Swing (`ui.swing.MainWindow`) |
 | `restaurant.common` | Dùng chung: định dạng tiền, định dạng hóa đơn |
 
+## Bài sửa lỗi cho từng thành viên
+
+Còn 4 lỗi nhỏ, chỉ xảy ra khi file `data/menu.csv` bị sửa tay sai. Mỗi thành viên sửa một lỗi và commit bằng tên mình, theo [`docs/VIEC-CUA-TUNG-BAN.md`](docs/VIEC-CUA-TUNG-BAN.md).
+
 ## Các mốc trong git
 
 | Tag | Nội dung |
@@ -100,7 +104,7 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 | `v1.0` | Bản nộp: bản `final` cộng các bản sửa lỗi sau khi review code |
 | `v1.1` | Thêm cấu hình chạy cho VS Code và tham số `--demo` |
 | `v1.2` | Thêm file bấm là chạy: `ChayGiaoDien`, `ChayConsole`, `ChayDemo` và các file `.sh` |
-| `v1.3` | Sửa lỗi nhỏ: console kiểm tra bàn trước khi hỏi giảm giá, nhãn doanh thu, Swing giữ món đang chọn, báo lỗi khi gõ số lượng sai, hiện cảnh báo đọc thực đơn |
+| `v1.3` | Sửa lỗi nhỏ: console kiểm tra bàn trước khi hỏi giảm giá, nhãn doanh thu, Swing giữ món đang chọn, báo lỗi khi gõ số lượng sai, hiện cảnh báo đọc thực đơn. Thêm bài sửa lỗi cho từng thành viên |
 
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
 
