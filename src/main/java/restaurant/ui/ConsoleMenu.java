@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import restaurant.common.BillFormatter;
 import restaurant.common.MoneyFormat;
+import restaurant.exception.EmptyOrderException;
 import restaurant.exception.RestaurantException;
 import restaurant.model.ItemType;
 import restaurant.model.MenuItem;
@@ -169,6 +170,11 @@ public class ConsoleMenu {
 
     private void checkout() throws RestaurantException {
         int tableNo = input.readInt("Số bàn: ", 1, 99);
+        // Kiểm tra bàn có đơn và đơn có món trước, để không bắt người dùng chọn giảm giá vô ích.
+        Order order = orders.currentOrder(tableNo);
+        if (order.isEmpty()) {
+            throw new EmptyOrderException(order.getId());
+        }
         out.println("1. Không giảm  2. Giảm theo %  3. Giảm số tiền");
         int kind = input.readInt("Chọn cách giảm giá: ", 1, 3);
         DiscountStrategy strategy = switch (kind) {
@@ -239,7 +245,7 @@ public class ConsoleMenu {
             out.println("Chưa có đơn nào được thanh toán");
             return;
         }
-        out.println("----- MÓN BÁN CHẠY -----");
+        out.println("----- MÓN BÁN CHẠY (doanh thu tính trước giảm giá) -----");
         for (int i = 0; i < top.size(); i++) {
             ItemSales sales = top.get(i);
             out.println((i + 1) + ". " + sales.itemName() + " - " + sales.quantity() + " phần - "

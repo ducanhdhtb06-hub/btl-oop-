@@ -64,7 +64,11 @@ public final class Main {
                 new BillCalculator(), new FileBillArchive(Path.of("data", "hoa-don.txt")), Clock.systemDefaultZone());
 
         if (options.contains("--gui")) {
-            SwingUtilities.invokeLater(() -> new MainWindow(menu, tables, orders).show());
+            SwingUtilities.invokeLater(() -> {
+                MainWindow window = new MainWindow(menu, tables, orders);
+                window.show();
+                window.showWarnings(menuRepo.getWarnings());
+            });
         } else {
             new ConsoleMenu(new InputReader(in, out), out, menu, tables, orders).run();
         }

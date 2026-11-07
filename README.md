@@ -96,11 +96,11 @@ App in ra UTF-8. Nếu cmd hiện sai dấu, chạy `chcp 65001` trước khi ch
 |---|---|
 | `milestone-4` | Bản cài đặt lõi (Milestone 4) |
 | `milestone-5` | Refactor theo SOLID: Strategy, Factory, BillArchive, InputReader; thêm Combo (Composite) |
-
 | `final` | Thêm giao diện Swing dùng chung service với console |
 | `v1.0` | Bản nộp: bản `final` cộng các bản sửa lỗi sau khi review code |
 | `v1.1` | Thêm cấu hình chạy cho VS Code và tham số `--demo` |
 | `v1.2` | Thêm file bấm là chạy: `ChayGiaoDien`, `ChayConsole`, `ChayDemo` và các file `.sh` |
+| `v1.3` | Sửa lỗi nhỏ: console kiểm tra bàn trước khi hỏi giảm giá, nhãn doanh thu, Swing giữ món đang chọn, báo lỗi khi gõ số lượng sai, hiện cảnh báo đọc thực đơn |
 
 Xem các thay đổi khi refactor: `git diff milestone-4 milestone-5 -- src/main`.
 

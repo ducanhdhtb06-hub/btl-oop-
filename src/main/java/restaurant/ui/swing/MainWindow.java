@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.text.ParseException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -90,6 +91,18 @@ public final class MainWindow {
         frame.setVisible(true);
     }
 
+    /**
+     * Hiện các cảnh báo (ví dụ khi đọc file thực đơn) trong một hộp thoại. Không làm gì nếu danh sách rỗng.
+     *
+     * @param warnings các dòng cảnh báo
+     */
+    public void showWarnings(List<String> warnings) {
+        if (!warnings.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, String.join("\n", warnings), "Cảnh báo khi đọc thực đơn",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     private void buildLayout() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout(8, 8));
@@ -116,7 +129,7 @@ public final class MainWindow {
         actions.add(new JLabel("Số lượng:"));
         actions.add(quantity);
         actions.add(button("Gọi món", () ->
-                orders.addItem(selectedTable(), selectedMenuItem(), (Integer) quantity.getValue())));
+                orders.addItem(selectedTable(), selectedMenuItem(), selectedQuantity())));
         actions.add(button("Bớt món", () -> orders.removeItem(selectedTable(), selectedOrderItem())));
         actions.add(new JLabel("   Giảm giá:"));
         actions.add(discountKind);
@@ -184,6 +197,16 @@ public final class MainWindow {
         return (String) menuModel.getValueAt(row, 0);
     }
 
+    private int selectedQuantity() {
+        try {
+            quantity.commitEdit();
+        } catch (ParseException e) {
+            ((JSpinner.DefaultEditor) quantity.getEditor()).getTextField().setValue(quantity.getValue());
+            throw new IllegalArgumentException("Số lượng phải là số từ 1 đến 99", e);
+        }
+        return (Integer) quantity.getValue();
+    }
+
     private String selectedOrderItem() {
         int row = orderView.getSelectedRow();
         if (row < 0) {
@@ -207,6 +230,7 @@ public final class MainWindow {
 
     private void refresh() {
         int selected = tableView.getSelectedRow();
+        String selectedMenuId = selectedId(menuView, menuModel);
         tableModel.setRowCount(0);
         for (Table table : tables.all()) {
             tableModel.addRow(new Object[] {table.getNumber(), table.getSeats(), table.isFree() ? "Trống" : "Có khách"});
@@ -219,10 +243,12 @@ public final class MainWindow {
             menuModel.addRow(new Object[] {item.getId(), item.describe(), MoneyFormat.format(item.getPrice()),
                 item.isAvailable() ? "Còn" : "Hết"});
         }
+        reselect(menuView, menuModel, selectedMenuId);
         refreshOrder();
     }
 
     private void refreshOrder() {
+        String selectedLineId = selectedId(orderView, orderModel);
         orderModel.setRowCount(0);
         int row = tableView.getSelectedRow();
         if (row < 0) {
@@ -240,11 +266,31 @@ public final class MainWindow {
                     MoneyFormat.format(line.getUnitPrice()), MoneyFormat.format(line.lineTotal())});
             }
             subtotalLabel.setText("Tạm tính: " + MoneyFormat.format(order.subtotal()));
+            reselect(orderView, orderModel, selectedLineId);
         } catch (NoOpenOrderException e) {
             orderTitle.setText("Bàn " + tableNo + " chưa có đơn. Bấm Mở bàn để bắt đầu.");
             subtotalLabel.setText("Tạm tính: 0 đ");
         } catch (RestaurantException e) {
             orderTitle.setText(e.getMessage());
+        }
+    }
+
+    /** Mã ở cột đầu của dòng đang chọn, hoặc {@code null} nếu chưa chọn dòng nào. */
+    private static String selectedId(JTable view, DefaultTableModel model) {
+        int row = view.getSelectedRow();
+        return row < 0 ? null : (String) model.getValueAt(row, 0);
+    }
+
+    /** Chọn lại dòng có mã cho trước sau khi bảng được dựng lại, để người dùng không phải chọn lại. */
+    private static void reselect(JTable view, DefaultTableModel model, String id) {
+        if (id == null) {
+            return;
+        }
+        for (int row = 0; row < model.getRowCount(); row++) {
+            if (id.equals(model.getValueAt(row, 0))) {
+                view.setRowSelectionInterval(row, row);
+                return;
+            }
         }
     }
 

@@ -57,7 +57,7 @@ Gói gốc: `restaurant`. `Main` nằm ở gói gốc, tự tạo các đối t�
 - `Food` (extends `SimpleMenuItem`): thêm `vegetarian`.
 - `Drink` (extends `SimpleMenuItem`): thêm `volumeMl`.
 - `Combo` (extends `MenuItem`, pattern **Composite**): giữ `List<MenuItem> components` được truyền vào từ bên ngoài (aggregation, ít nhất 1 món) và `discountPercent` (0–100). `getPrice()` = tổng giá các món thành phần, trừ % combo, làm tròn đến đồng. `isAvailable()` chỉ đúng khi bản thân combo và mọi món thành phần đều còn. Combo có thể chứa combo khác.
-- `MenuItemFactory` (pattern **Factory**): `create(ItemType, ...)` tạo đúng lớp con. Có ở bản Milestone 5.
+- `MenuItemFactory` (pattern **Factory**): `fromCsvRow(String row, Function<String, Optional<MenuItem>> lookup)` đọc cột loại món rồi tạo đúng lớp con (`Food`, `Drink`, `Combo`); `lookup` dùng để tìm các món thành phần của combo. Có ở bản Milestone 5.
 - `ItemType` (enum): `FOOD`, `DRINK`, `COMBO`.
 - `Table` (implements `Identifiable<Integer>`): `number`, `seats`, `TableStatus status`. Có `occupy()` và `release()`.
 - `TableStatus` (enum): `FREE`, `OCCUPIED`.
