@@ -1,0 +1,21 @@
+---
+title: Biểu đồ lớp - ngoại lệ nghiệp vụ
+config:
+  layout: elk
+---
+classDiagram
+    direction TB
+    class Exception
+    class RestaurantException {
+        +RestaurantException(String message)
+    }
+    Exception <|-- RestaurantException
+    RestaurantException <|-- MenuItemNotFoundException
+    RestaurantException <|-- ItemUnavailableException
+    RestaurantException <|-- ItemNotInOrderException
+    RestaurantException <|-- InvalidQuantityException
+    RestaurantException <|-- EmptyOrderException
+    RestaurantException <|-- OrderClosedException
+    RestaurantException <|-- NoOpenOrderException
+    RestaurantException <|-- TableNotFoundException
+    RestaurantException <|-- TableNotAvailableException

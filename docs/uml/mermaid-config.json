@@ -1,0 +1,6 @@
+{
+  "theme": "neutral",
+  "themeVariables": { "fontFamily": "DejaVu Sans, Noto Sans, sans-serif", "fontSize": "14px" },
+  "class": { "hideEmptyMembersBox": true },
+  "sequence": { "mirrorActors": false, "showSequenceNumbers": true }
+}

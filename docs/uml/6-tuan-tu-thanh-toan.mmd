@@ -1,0 +1,38 @@
+---
+title: Biểu đồ tuần tự - Thanh toán
+---
+sequenceDiagram
+    actor NV as Nhân viên
+    participant UI as :ConsoleMenu
+    participant OS as :OrderService
+    participant O as :Order
+    participant BC as :BillCalculator
+    participant DS as :DiscountStrategy
+    participant T as :Table
+    participant BA as :BillArchive
+
+    NV->>UI: chọn "7. Thanh toán", nhập số bàn
+    UI->>OS: currentOrder(tableNo)
+    OS-->>UI: order
+    Note over UI,OS: đơn rỗng: báo lỗi ngay
+    NV->>UI: chọn cách giảm giá
+    UI->>UI: new PercentageDiscount(...)
+    UI->>OS: checkout(tableNo, strategy)
+    OS->>BC: calculate(order, strategy, now)
+    BC->>O: subtotal(), getItems()
+    O-->>BC: tạm tính, các dòng món
+    BC->>DS: discountFor(subtotal)
+    DS-->>BC: số tiền giảm
+    BC->>DS: label()
+    BC-->>OS: bill
+    OS->>O: markPaid()
+    OS->>T: release()
+    OS->>BA: archive(bill)
+    alt ghi file được
+        BA-->>OS: xong
+        OS-->>UI: CheckoutResult(bill, archived = true)
+    else lỗi ghi file (IOException)
+        OS-->>UI: CheckoutResult(bill, archived = false)
+    end
+    UI-->>NV: in hóa đơn
+    Note over NV,UI: archived = false thì in thêm cảnh báo

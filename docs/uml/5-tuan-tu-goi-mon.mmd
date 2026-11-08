@@ -1,0 +1,37 @@
+---
+title: Biểu đồ tuần tự - Gọi món
+---
+sequenceDiagram
+    actor NV as Nhân viên
+    participant UI as :ConsoleMenu
+    participant OS as :OrderService
+    participant MS as :MenuService
+    participant R as :Repository#lt;Order#gt;
+    participant O as :Order
+    participant I as :OrderItem
+
+    NV->>UI: nhập bàn, mã món, số lượng
+    UI->>OS: addItem(tableNo, itemId, quantity)
+    OS->>R: findAll()
+    R-->>OS: các đơn
+    Note over OS,R: lọc đơn OPEN của bàn, không có thì ném NoOpenOrderException
+    OS->>MS: find(itemId)
+    alt không có món
+        MS-->>OS: ném MenuItemNotFoundException
+    else có món
+        MS-->>OS: item
+        OS->>O: addItem(item, quantity)
+        O->>O: requireOpen(), requireValidQuantity()
+        alt món đã hết
+            O-->>OS: ném ItemUnavailableException
+        else món đã có trong đơn
+            O->>I: setQuantity(cũ + quantity)
+        else món mới
+            O->>I: new OrderItem(item, quantity)
+            Note over O,I: giữ giá tại lúc gọi (unitPrice)
+        end
+    end
+    OS-->>UI: xong, hoặc ngoại lệ
+    UI->>OS: currentOrder(tableNo)
+    OS-->>UI: order
+    UI-->>NV: "Đã thêm ... Tạm tính: ..." hoặc "Lỗi: ..."
