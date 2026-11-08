@@ -15,35 +15,35 @@ sequenceDiagram
     UI->>OS: addItem(tableNo, itemId, quantity)
     OS->>OS: currentOrder(tableNo)
     OS->>TS: find(tableNo)
-    TS-->>OS: table, hoặc ném TableNotFoundException
+    TS--)OS: table, hoặc ném TableNotFoundException
     OS->>R: findAll()
-    R-->>OS: danh sách đơn
+    R--)OS: danh sách đơn
     Note over OS,R: lấy đơn OPEN của bàn, không có thì ném NoOpenOrderException
     OS->>MS: find(itemId)
-    MS-->>OS: item, hoặc ném MenuItemNotFoundException
+    MS--)OS: item, hoặc ném MenuItemNotFoundException
     OS->>O: addItem(item, quantity)
     O->>O: requireOpen(), requireValidQuantity(quantity)
     alt món đang hết (item.isAvailable() = false)
-        O-->>OS: ném ItemUnavailableException
+        O--)OS: ném ItemUnavailableException
     else món còn bán
-        O->>O: findLine(itemId)
+        O->>O: findLine(item.getId())
         alt đơn đã có món này
             O->>O: requireValidQuantity(số cũ + quantity)
             O->>I: setQuantity(số cũ + quantity)
         else món mới
-            O->>I: «create» new OrderItem(item, quantity)
+            O--)I: «create» new OrderItem(item, quantity)
             Note over O,I: OrderItem lưu giá tại lúc gọi (unitPrice)
         end
     end
-    O-->>OS: xong
-    OS-->>UI: xong, hoặc ngoại lệ RestaurantException
+    O--)OS: xong
+    OS--)UI: xong, hoặc ngoại lệ RestaurantException
     alt thành công
         UI->>MS: find(itemId)
-        MS-->>UI: item (lấy tên món)
+        MS--)UI: item (lấy tên món)
         UI->>OS: currentOrder(tableNo)
-        OS-->>UI: order
+        OS--)UI: order
         UI->>O: subtotal()
-        UI-->>NV: "Đã thêm 2 x Phở bò vào bàn 3. Tạm tính: ..."
+        UI--)NV: "Đã thêm 2 x Phở bò vào bàn 3. Tạm tính: ..."
     else có RestaurantException
-        UI-->>NV: "Lỗi: " + thông báo của ngoại lệ
+        UI--)NV: "Lỗi: " + thông báo của ngoại lệ
     end

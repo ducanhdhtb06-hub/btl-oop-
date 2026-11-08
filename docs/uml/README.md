@@ -35,7 +35,9 @@
 | mũi tên nét liền | kết hợp (tên ở giữa là tên thuộc tính trong code) | `Order` → `Table` qua thuộc tính `table` |
 | mũi tên nét đứt | phụ thuộc «use», «create», «call» | `BillCalculator` «create» `Bill` |
 
-Không vẽ: hàm private phụ trợ, hàm tạo mặc định do Java tự thêm, `serialVersionUID`, các hàm tự sinh của record. Ghi chú trên hình nói rõ những phần được lược cho gọn.
+Không vẽ: hàm private phụ trợ, lớp lồng bên trong (`MainWindow.UiAction`), hàm tạo mặc định do Java tự thêm, `serialVersionUID`, hàm tạo và các hàm truy cập của record (record chỉ vẽ các thành phần), `values()`/`valueOf()` của enum. Ghi chú trên hình nói rõ những phần khác được lược cho gọn (ví dụ các thuộc tính Swing của `MainWindow`).
+
+Biểu đồ tuần tự theo ký hiệu UML 2: gọi hàm là nét liền mũi tên đặc; trả về và tạo đối tượng («create») là nét đứt mũi tên hở.
 
 ## File nguồn
 

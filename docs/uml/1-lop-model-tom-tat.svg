@@ -11,17 +11,122 @@
 <polygon fill="white" stroke="transparent" points="-25.2,25.2 -25.2,-630.2 1094.2,-630.2 1094.2,25.2 -25.2,25.2"/>
 <text text-anchor="start" x="89" y="-588.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00">Biểu đồ lớp 1 &#45; Gói model và pricing (các lớp nghiệp vụ) (bản tóm tắt: chỉ tên lớp và quan hệ)</text>
 <g id="clust1" class="cluster">
-<title>cluster_model</title>
-<path fill="#fbfbfb" stroke="#8a8a8a" stroke-width="1.2" d="M20,-8C20,-8 585,-8 585,-8 591,-8 597,-14 597,-20 597,-20 597,-558 597,-558 597,-564 591,-570 585,-570 585,-570 20,-570 20,-570 14,-570 8,-564 8,-558 8,-558 8,-20 8,-20 8,-14 14,-8 20,-8"/>
-<text text-anchor="start" x="16" y="-556.6" font-family="DejaVu Sans" font-weight="bold" font-size="13.00">restaurant.model</text>
-</g>
-<g id="clust2" class="cluster">
 <title>cluster_pricing</title>
 <path fill="#fbfbfb" stroke="#8a8a8a" stroke-width="1.2" d="M617,-299.5C617,-299.5 1049,-299.5 1049,-299.5 1055,-299.5 1061,-305.5 1061,-311.5 1061,-311.5 1061,-553.5 1061,-553.5 1061,-559.5 1055,-565.5 1049,-565.5 1049,-565.5 617,-565.5 617,-565.5 611,-565.5 605,-559.5 605,-553.5 605,-553.5 605,-311.5 605,-311.5 605,-305.5 611,-299.5 617,-299.5"/>
 <text text-anchor="start" x="613" y="-552.1" font-family="DejaVu Sans" font-weight="bold" font-size="13.00">restaurant.pricing</text>
 </g>
-<!-- c_Identifiable -->
+<g id="clust2" class="cluster">
+<title>cluster_model</title>
+<path fill="#fbfbfb" stroke="#8a8a8a" stroke-width="1.2" d="M20,-8C20,-8 585,-8 585,-8 591,-8 597,-14 597,-20 597,-20 597,-558 597,-558 597,-564 591,-570 585,-570 585,-570 20,-570 20,-570 14,-570 8,-564 8,-558 8,-558 8,-20 8,-20 8,-14 14,-8 20,-8"/>
+<text text-anchor="start" x="16" y="-556.6" font-family="DejaVu Sans" font-weight="bold" font-size="13.00">restaurant.model</text>
+</g>
+<!-- c_DiscountStrategy -->
 <g id="node1" class="node">
+<title>c_DiscountStrategy</title>
+<polygon fill="#fff8e1" stroke="transparent" points="763.5,-405 763.5,-438 884.5,-438 884.5,-405 763.5,-405"/>
+<text text-anchor="start" x="796.5" y="-424.5" font-family="DejaVu Sans" font-size="10.00">«interface»</text>
+<text text-anchor="start" x="770" y="-413.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">DiscountStrategy</text>
+<polygon fill="none" stroke="#3a3a3a" points="763.5,-405 763.5,-438 884.5,-438 884.5,-405 763.5,-405"/>
+</g>
+<!-- c_NoDiscount -->
+<g id="node2" class="node">
+<title>c_NoDiscount</title>
+<polygon fill="#eef3fa" stroke="transparent" points="796.5,-307.5 796.5,-331.5 879.5,-331.5 879.5,-307.5 796.5,-307.5"/>
+<text text-anchor="start" x="803" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">NoDiscount</text>
+<polygon fill="none" stroke="#3a3a3a" points="796.5,-307.5 796.5,-331.5 879.5,-331.5 879.5,-307.5 796.5,-307.5"/>
+</g>
+<!-- c_DiscountStrategy&#45;&gt;c_NoDiscount -->
+<g id="edge4" class="edge">
+<title>c_DiscountStrategy&#45;&gt;c_NoDiscount</title>
+<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M827.94,-392.39C830.75,-372.27 834.39,-346.26 836.43,-331.68"/>
+<polygon fill="none" stroke="#333333" points="823.59,-391.89 826.19,-404.88 832.25,-393.1 823.59,-391.89"/>
+</g>
+<!-- c_PercentageDiscount -->
+<g id="node3" class="node">
+<title>c_PercentageDiscount</title>
+<polygon fill="#eef3fa" stroke="transparent" points="915.5,-307.5 915.5,-331.5 1052.5,-331.5 1052.5,-307.5 915.5,-307.5"/>
+<text text-anchor="start" x="922" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">PercentageDiscount</text>
+<polygon fill="none" stroke="#3a3a3a" points="915.5,-307.5 915.5,-331.5 1052.5,-331.5 1052.5,-307.5 915.5,-307.5"/>
+</g>
+<!-- c_DiscountStrategy&#45;&gt;c_PercentageDiscount -->
+<g id="edge5" class="edge">
+<title>c_DiscountStrategy&#45;&gt;c_PercentageDiscount</title>
+<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M860.01,-397.99C893.03,-377.36 940.55,-347.65 966.11,-331.68"/>
+<polygon fill="none" stroke="#333333" points="857.28,-394.54 849,-404.88 861.92,-401.96 857.28,-394.54"/>
+</g>
+<!-- c_FixedAmountDiscount -->
+<g id="node4" class="node">
+<title>c_FixedAmountDiscount</title>
+<polygon fill="#eef3fa" stroke="transparent" points="613.5,-307.5 613.5,-331.5 760.5,-331.5 760.5,-307.5 613.5,-307.5"/>
+<text text-anchor="start" x="620" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">FixedAmountDiscount</text>
+<polygon fill="none" stroke="#3a3a3a" points="613.5,-307.5 613.5,-331.5 760.5,-331.5 760.5,-307.5 613.5,-307.5"/>
+</g>
+<!-- c_DiscountStrategy&#45;&gt;c_FixedAmountDiscount -->
+<g id="edge6" class="edge">
+<title>c_DiscountStrategy&#45;&gt;c_FixedAmountDiscount</title>
+<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M792.42,-397.45C764.18,-376.84 724.01,-347.51 702.32,-331.68"/>
+<polygon fill="none" stroke="#333333" points="789.92,-401.04 802.59,-404.88 795.08,-393.97 789.92,-401.04"/>
+</g>
+<!-- c_BillCalculator -->
+<g id="node5" class="node">
+<title>c_BillCalculator</title>
+<polygon fill="#eef3fa" stroke="transparent" points="613.5,-511.5 613.5,-535.5 708.5,-535.5 708.5,-511.5 613.5,-511.5"/>
+<text text-anchor="start" x="620" y="-521.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">BillCalculator</text>
+<polygon fill="none" stroke="#3a3a3a" points="613.5,-511.5 613.5,-535.5 708.5,-535.5 708.5,-511.5 613.5,-511.5"/>
+</g>
+<!-- c_BillCalculator&#45;&gt;c_DiscountStrategy -->
+<g id="edge23" class="edge">
+<title>c_BillCalculator&#45;&gt;c_DiscountStrategy</title>
+<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M679.07,-511.42C705.89,-494.96 756.7,-463.79 790.46,-443.08"/>
+<polygon fill="#555555" stroke="#555555" points="798.65,-438.05 792.79,-446.66 794.6,-440.54 790.55,-443.02 790.55,-443.02 790.55,-443.02 794.6,-440.54 788.32,-439.38 798.65,-438.05 798.65,-438.05"/>
+<text text-anchor="middle" x="765" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «use» </text>
+</g>
+<!-- c_Order -->
+<g id="node16" class="node">
+<title>c_Order</title>
+<polygon fill="#eef3fa" stroke="transparent" points="280.5,-409.5 280.5,-433.5 327.5,-433.5 327.5,-409.5 280.5,-409.5"/>
+<text text-anchor="start" x="287" y="-419.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Order</text>
+<polygon fill="none" stroke="#3a3a3a" points="280.5,-409.5 280.5,-433.5 327.5,-433.5 327.5,-409.5 280.5,-409.5"/>
+</g>
+<!-- c_BillCalculator&#45;&gt;c_Order -->
+<g id="edge22" class="edge">
+<title>c_BillCalculator&#45;&gt;c_Order</title>
+<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M621.94,-511.48C616.59,-509.98 611.16,-508.45 606,-507 508.34,-479.58 392.87,-447.31 337.24,-431.78"/>
+<polygon fill="#555555" stroke="#555555" points="327.89,-429.17 338.19,-427.6 332.46,-430.44 337.04,-431.72 337.04,-431.72 337.04,-431.72 332.46,-430.44 335.89,-435.84 327.89,-429.17 327.89,-429.17"/>
+<text text-anchor="middle" x="516" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «use» </text>
+</g>
+<!-- c_Bill -->
+<g id="node19" class="node">
+<title>c_Bill</title>
+<polygon fill="#eef7ee" stroke="transparent" points="525.5,-405 525.5,-438 580.5,-438 580.5,-405 525.5,-405"/>
+<text text-anchor="start" x="532" y="-424.5" font-family="DejaVu Sans" font-size="10.00">«record»</text>
+<text text-anchor="start" x="543.5" y="-413.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Bill</text>
+<polygon fill="none" stroke="#3a3a3a" points="525.5,-405 525.5,-438 580.5,-438 580.5,-405 525.5,-405"/>
+</g>
+<!-- c_BillCalculator&#45;&gt;c_Bill -->
+<g id="edge24" class="edge">
+<title>c_BillCalculator&#45;&gt;c_Bill</title>
+<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M632.78,-511.45C616.39,-503.94 596.24,-492.7 582,-478 573.54,-469.27 566.94,-457.59 562.19,-447.19"/>
+<polygon fill="#555555" stroke="#555555" points="558.34,-438.12 565.99,-445.2 560.2,-442.49 562.05,-446.87 562.05,-446.87 562.05,-446.87 560.2,-442.49 558.12,-448.54 558.34,-438.12 558.34,-438.12"/>
+<text text-anchor="middle" x="606.5" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «create» </text>
+</g>
+<!-- c_BillLine -->
+<g id="node20" class="node">
+<title>c_BillLine</title>
+<polygon fill="#eef7ee" stroke="transparent" points="519,-303 519,-336 577,-336 577,-303 519,-303"/>
+<text text-anchor="start" x="526.5" y="-322.5" font-family="DejaVu Sans" font-size="10.00">«record»</text>
+<text text-anchor="start" x="525" y="-311.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">BillLine</text>
+<polygon fill="none" stroke="#3a3a3a" points="519,-303 519,-336 577,-336 577,-303 519,-303"/>
+</g>
+<!-- c_BillCalculator&#45;&gt;c_BillLine -->
+<g id="edge25" class="edge">
+<title>c_BillCalculator&#45;&gt;c_BillLine</title>
+<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M657.85,-511.46C649.88,-484.71 627.1,-414.92 593,-365 587.63,-357.14 580.74,-349.5 573.97,-342.83"/>
+<polygon fill="#555555" stroke="#555555" points="566.76,-336.02 576.6,-339.43 570.21,-339.28 573.66,-342.54 573.66,-342.54 573.66,-342.54 570.21,-339.28 570.73,-345.65 566.76,-336.02 566.76,-336.02"/>
+<text text-anchor="middle" x="654.5" y="-419" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «create» </text>
+</g>
+<!-- c_Identifiable -->
+<g id="node6" class="node">
 <title>c_Identifiable</title>
 <polygon fill="#fff8e1" stroke="transparent" points="129.5,-507 129.5,-540 242.5,-540 242.5,-507 129.5,-507"/>
 <text text-anchor="start" x="158.5" y="-526.5" font-family="DejaVu Sans" font-size="10.00">«interface»</text>
@@ -29,7 +134,7 @@
 <polygon fill="none" stroke="#3a3a3a" points="129.5,-507 129.5,-540 242.5,-540 242.5,-507 129.5,-507"/>
 </g>
 <!-- c_MenuItem -->
-<g id="node2" class="node">
+<g id="node7" class="node">
 <title>c_MenuItem</title>
 <polygon fill="#eef3fa" stroke="transparent" points="174,-201 174,-234 248,-234 248,-201 174,-201"/>
 <text text-anchor="start" x="185" y="-220.5" font-family="DejaVu Sans" font-size="10.00">«abstract»</text>
@@ -44,7 +149,7 @@
 <text text-anchor="middle" x="219.11" y="-251.65" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> ID = String </text>
 </g>
 <!-- c_Table -->
-<g id="node9" class="node">
+<g id="node14" class="node">
 <title>c_Table</title>
 <polygon fill="#eef3fa" stroke="transparent" points="103.5,-307.5 103.5,-331.5 148.5,-331.5 148.5,-307.5 103.5,-307.5"/>
 <text text-anchor="start" x="110" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Table</text>
@@ -57,13 +162,6 @@
 <polygon fill="none" stroke="#333333" points="173.64,-496.25 181.39,-506.98 182.03,-493.76 173.64,-496.25"/>
 <text text-anchor="middle" x="145.28" y="-344.29" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> ID = Integer </text>
 </g>
-<!-- c_Order -->
-<g id="node11" class="node">
-<title>c_Order</title>
-<polygon fill="#eef3fa" stroke="transparent" points="280.5,-409.5 280.5,-433.5 327.5,-433.5 327.5,-409.5 280.5,-409.5"/>
-<text text-anchor="start" x="287" y="-419.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Order</text>
-<polygon fill="none" stroke="#3a3a3a" points="280.5,-409.5 280.5,-433.5 327.5,-433.5 327.5,-409.5 280.5,-409.5"/>
-</g>
 <!-- c_Identifiable&#45;&gt;c_Order -->
 <g id="edge3" class="edge">
 <title>c_Identifiable&#45;&gt;c_Order</title>
@@ -72,7 +170,7 @@
 <text text-anchor="middle" x="283.38" y="-451.89" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> ID = Integer </text>
 </g>
 <!-- c_SimpleMenuItem -->
-<g id="node3" class="node">
+<g id="node8" class="node">
 <title>c_SimpleMenuItem</title>
 <polygon fill="#eef3fa" stroke="transparent" points="16,-99 16,-132 132,-132 132,-99 16,-99"/>
 <text text-anchor="start" x="48" y="-118.5" font-family="DejaVu Sans" font-size="10.00">«abstract»</text>
@@ -86,7 +184,7 @@
 <polygon fill="none" stroke="#333333" points="176.92,-197.04 189.59,-200.88 182.08,-189.97 176.92,-197.04"/>
 </g>
 <!-- c_Combo -->
-<g id="node6" class="node">
+<g id="node11" class="node">
 <title>c_Combo</title>
 <polygon fill="#eef3fa" stroke="transparent" points="291.5,-103.5 291.5,-127.5 346.5,-127.5 346.5,-103.5 291.5,-103.5"/>
 <text text-anchor="start" x="298" y="-113.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Combo</text>
@@ -99,7 +197,7 @@
 <polygon fill="none" stroke="#333333" points="203.63,-188.55 208.39,-200.9 212.37,-188.27 203.63,-188.55"/>
 </g>
 <!-- c_ItemType -->
-<g id="node7" class="node">
+<g id="node12" class="node">
 <title>c_ItemType</title>
 <polygon fill="#eef7ee" stroke="transparent" points="168.5,-99 168.5,-132 255.5,-132 255.5,-99 168.5,-99"/>
 <text text-anchor="start" x="175" y="-118.5" font-family="DejaVu Sans" font-size="10.00">«enumeration»</text>
@@ -114,7 +212,7 @@
 <text text-anchor="middle" x="183" y="-164" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «use» </text>
 </g>
 <!-- c_Food -->
-<g id="node4" class="node">
+<g id="node9" class="node">
 <title>c_Food</title>
 <polygon fill="#eef3fa" stroke="transparent" points="232,-16 232,-40 274,-40 274,-16 232,-16"/>
 <text text-anchor="start" x="238" y="-26.2" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Food</text>
@@ -127,7 +225,7 @@
 <polygon fill="none" stroke="#333333" points="116.23,-89.48 106.83,-98.82 120,-97.38 116.23,-89.48"/>
 </g>
 <!-- c_Drink -->
-<g id="node5" class="node">
+<g id="node10" class="node">
 <title>c_Drink</title>
 <polygon fill="#eef3fa" stroke="transparent" points="370,-16 370,-40 416,-40 416,-16 370,-16"/>
 <text text-anchor="start" x="376" y="-26.2" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Drink</text>
@@ -149,7 +247,7 @@
 <text text-anchor="middle" x="290.94" y="-125.96" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 0..* </text>
 </g>
 <!-- c_MenuItemFactory -->
-<g id="node8" class="node">
+<g id="node13" class="node">
 <title>c_MenuItemFactory</title>
 <polygon fill="#eef3fa" stroke="transparent" points="358.5,-201 358.5,-234 479.5,-234 479.5,-201 358.5,-201"/>
 <text text-anchor="start" x="399" y="-220.5" font-family="DejaVu Sans" font-size="10.00">«utility»</text>
@@ -178,7 +276,7 @@
 <text text-anchor="middle" x="384.5" y="-164" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «create» </text>
 </g>
 <!-- c_TableStatus -->
-<g id="node10" class="node">
+<g id="node15" class="node">
 <title>c_TableStatus</title>
 <polygon fill="#eef7ee" stroke="transparent" points="50.5,-201 50.5,-234 137.5,-234 137.5,-201 50.5,-201"/>
 <text text-anchor="start" x="57" y="-220.5" font-family="DejaVu Sans" font-size="10.00">«enumeration»</text>
@@ -204,7 +302,7 @@
 <text text-anchor="middle" x="278.62" y="-391.95" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 0..* </text>
 </g>
 <!-- c_OrderStatus -->
-<g id="node12" class="node">
+<g id="node17" class="node">
 <title>c_OrderStatus</title>
 <polygon fill="#eef7ee" stroke="transparent" points="223,-303 223,-336 311,-336 311,-303 223,-303"/>
 <text text-anchor="start" x="229.5" y="-322.5" font-family="DejaVu Sans" font-size="10.00">«enumeration»</text>
@@ -221,7 +319,7 @@
 <text text-anchor="middle" x="305.29" y="-391.85" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 0..* </text>
 </g>
 <!-- c_OrderItem -->
-<g id="node13" class="node">
+<g id="node18" class="node">
 <title>c_OrderItem</title>
 <polygon fill="#eef3fa" stroke="transparent" points="347.5,-307.5 347.5,-331.5 422.5,-331.5 422.5,-307.5 347.5,-307.5"/>
 <text text-anchor="start" x="354" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">OrderItem</text>
@@ -245,22 +343,6 @@
 <text text-anchor="middle" x="243.56" y="-246.58" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 1 </text>
 <text text-anchor="middle" x="360.21" y="-289.89" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 0..* </text>
 </g>
-<!-- c_Bill -->
-<g id="node14" class="node">
-<title>c_Bill</title>
-<polygon fill="#eef7ee" stroke="transparent" points="525.5,-405 525.5,-438 580.5,-438 580.5,-405 525.5,-405"/>
-<text text-anchor="start" x="532" y="-424.5" font-family="DejaVu Sans" font-size="10.00">«record»</text>
-<text text-anchor="start" x="543.5" y="-413.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">Bill</text>
-<polygon fill="none" stroke="#3a3a3a" points="525.5,-405 525.5,-438 580.5,-438 580.5,-405 525.5,-405"/>
-</g>
-<!-- c_BillLine -->
-<g id="node15" class="node">
-<title>c_BillLine</title>
-<polygon fill="#eef7ee" stroke="transparent" points="519,-303 519,-336 577,-336 577,-303 519,-303"/>
-<text text-anchor="start" x="526.5" y="-322.5" font-family="DejaVu Sans" font-size="10.00">«record»</text>
-<text text-anchor="start" x="525" y="-311.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">BillLine</text>
-<polygon fill="none" stroke="#3a3a3a" points="519,-303 519,-336 577,-336 577,-303 519,-303"/>
-</g>
 <!-- c_Bill&#45;&gt;c_BillLine -->
 <g id="edge12" class="edge">
 <title>c_Bill&#45;&gt;c_BillLine</title>
@@ -269,88 +351,6 @@
 <text text-anchor="middle" x="567" y="-368" font-family="DejaVu Sans" font-size="10.00"> &#45;lines </text>
 <text text-anchor="middle" x="539.12" y="-346.27" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 0..* </text>
 <text text-anchor="middle" x="561.88" y="-389.62" font-family="DejaVu Sans" font-size="10.00" fill="#1a1a1a"> 1 </text>
-</g>
-<!-- c_DiscountStrategy -->
-<g id="node16" class="node">
-<title>c_DiscountStrategy</title>
-<polygon fill="#fff8e1" stroke="transparent" points="753.5,-405 753.5,-438 874.5,-438 874.5,-405 753.5,-405"/>
-<text text-anchor="start" x="786.5" y="-424.5" font-family="DejaVu Sans" font-size="10.00">«interface»</text>
-<text text-anchor="start" x="760" y="-413.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">DiscountStrategy</text>
-<polygon fill="none" stroke="#3a3a3a" points="753.5,-405 753.5,-438 874.5,-438 874.5,-405 753.5,-405"/>
-</g>
-<!-- c_NoDiscount -->
-<g id="node17" class="node">
-<title>c_NoDiscount</title>
-<polygon fill="#eef3fa" stroke="transparent" points="796.5,-307.5 796.5,-331.5 879.5,-331.5 879.5,-307.5 796.5,-307.5"/>
-<text text-anchor="start" x="803" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">NoDiscount</text>
-<polygon fill="none" stroke="#3a3a3a" points="796.5,-307.5 796.5,-331.5 879.5,-331.5 879.5,-307.5 796.5,-307.5"/>
-</g>
-<!-- c_DiscountStrategy&#45;&gt;c_NoDiscount -->
-<g id="edge4" class="edge">
-<title>c_DiscountStrategy&#45;&gt;c_NoDiscount</title>
-<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M820.68,-392.68C825.51,-372.52 831.8,-346.33 835.32,-331.68"/>
-<polygon fill="none" stroke="#333333" points="816.41,-391.7 817.75,-404.88 824.92,-393.74 816.41,-391.7"/>
-</g>
-<!-- c_PercentageDiscount -->
-<g id="node18" class="node">
-<title>c_PercentageDiscount</title>
-<polygon fill="#eef3fa" stroke="transparent" points="915.5,-307.5 915.5,-331.5 1052.5,-331.5 1052.5,-307.5 915.5,-307.5"/>
-<text text-anchor="start" x="922" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">PercentageDiscount</text>
-<polygon fill="none" stroke="#3a3a3a" points="915.5,-307.5 915.5,-331.5 1052.5,-331.5 1052.5,-307.5 915.5,-307.5"/>
-</g>
-<!-- c_DiscountStrategy&#45;&gt;c_PercentageDiscount -->
-<g id="edge5" class="edge">
-<title>c_DiscountStrategy&#45;&gt;c_PercentageDiscount</title>
-<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M851.35,-398.53C886.46,-377.88 937.6,-347.79 964.99,-331.68"/>
-<polygon fill="none" stroke="#333333" points="849.12,-394.77 840.56,-404.88 853.55,-402.31 849.12,-394.77"/>
-</g>
-<!-- c_FixedAmountDiscount -->
-<g id="node19" class="node">
-<title>c_FixedAmountDiscount</title>
-<polygon fill="#eef3fa" stroke="transparent" points="613.5,-307.5 613.5,-331.5 760.5,-331.5 760.5,-307.5 613.5,-307.5"/>
-<text text-anchor="start" x="620" y="-317.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">FixedAmountDiscount</text>
-<polygon fill="none" stroke="#3a3a3a" points="613.5,-307.5 613.5,-331.5 760.5,-331.5 760.5,-307.5 613.5,-307.5"/>
-</g>
-<!-- c_DiscountStrategy&#45;&gt;c_FixedAmountDiscount -->
-<g id="edge6" class="edge">
-<title>c_DiscountStrategy&#45;&gt;c_FixedAmountDiscount</title>
-<path fill="none" stroke="#333333" stroke-dasharray="5,2" d="M784.03,-396.9C757.89,-376.32 721.13,-347.38 701.2,-331.68"/>
-<polygon fill="none" stroke="#333333" points="781.63,-400.58 794.16,-404.88 787.04,-393.7 781.63,-400.58"/>
-</g>
-<!-- c_BillCalculator -->
-<g id="node20" class="node">
-<title>c_BillCalculator</title>
-<polygon fill="#eef3fa" stroke="transparent" points="613.5,-511.5 613.5,-535.5 708.5,-535.5 708.5,-511.5 613.5,-511.5"/>
-<text text-anchor="start" x="620" y="-521.7" font-family="DejaVu Sans" font-weight="bold" font-size="11.00">BillCalculator</text>
-<polygon fill="none" stroke="#3a3a3a" points="613.5,-511.5 613.5,-535.5 708.5,-535.5 708.5,-511.5 613.5,-511.5"/>
-</g>
-<!-- c_BillCalculator&#45;&gt;c_Order -->
-<g id="edge22" class="edge">
-<title>c_BillCalculator&#45;&gt;c_Order</title>
-<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M621.94,-511.48C616.59,-509.98 611.16,-508.45 606,-507 508.34,-479.58 392.87,-447.31 337.24,-431.78"/>
-<polygon fill="#555555" stroke="#555555" points="327.89,-429.17 338.19,-427.6 332.46,-430.44 337.04,-431.72 337.04,-431.72 337.04,-431.72 332.46,-430.44 335.89,-435.84 327.89,-429.17 327.89,-429.17"/>
-<text text-anchor="middle" x="516" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «use» </text>
-</g>
-<!-- c_BillCalculator&#45;&gt;c_Bill -->
-<g id="edge24" class="edge">
-<title>c_BillCalculator&#45;&gt;c_Bill</title>
-<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M632.78,-511.45C616.39,-503.94 596.24,-492.7 582,-478 573.54,-469.27 566.94,-457.59 562.19,-447.19"/>
-<polygon fill="#555555" stroke="#555555" points="558.34,-438.12 565.99,-445.2 560.2,-442.49 562.05,-446.87 562.05,-446.87 562.05,-446.87 560.2,-442.49 558.12,-448.54 558.34,-438.12 558.34,-438.12"/>
-<text text-anchor="middle" x="606.5" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «create» </text>
-</g>
-<!-- c_BillCalculator&#45;&gt;c_BillLine -->
-<g id="edge25" class="edge">
-<title>c_BillCalculator&#45;&gt;c_BillLine</title>
-<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M657.85,-511.46C649.88,-484.71 627.1,-414.92 593,-365 587.63,-357.14 580.74,-349.5 573.97,-342.83"/>
-<polygon fill="#555555" stroke="#555555" points="566.76,-336.02 576.6,-339.43 570.21,-339.28 573.66,-342.54 573.66,-342.54 573.66,-342.54 570.21,-339.28 570.73,-345.65 566.76,-336.02 566.76,-336.02"/>
-<text text-anchor="middle" x="654.5" y="-419" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «create» </text>
-</g>
-<!-- c_BillCalculator&#45;&gt;c_DiscountStrategy -->
-<g id="edge23" class="edge">
-<title>c_BillCalculator&#45;&gt;c_DiscountStrategy</title>
-<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M677.96,-511.42C703.03,-495.03 750.42,-464.06 782.11,-443.34"/>
-<polygon fill="#555555" stroke="#555555" points="790.21,-438.05 784.59,-446.83 786.23,-440.65 782.25,-443.25 782.25,-443.25 782.25,-443.25 786.23,-440.65 779.91,-439.67 790.21,-438.05 790.21,-438.05"/>
-<text text-anchor="middle" x="760" y="-470" font-family="DejaVu Sans" font-size="10.00" fill="#444444"> «use» </text>
 </g>
 </g>
 </svg>

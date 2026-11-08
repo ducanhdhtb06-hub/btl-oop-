@@ -3,6 +3,14 @@ digraph UML {
          rankdir=TB, nodesep=0.5, ranksep=0.8, newrank=true, pad=0.35, bgcolor=white];
   node [shape=plain, fontname="DejaVu Sans", fontsize=11];
   edge [fontname="DejaVu Sans", fontsize=10, color="#333333", arrowsize=0.95, labelfontsize=10, labelfontcolor="#1a1a1a"];
+  subgraph cluster_pricing {
+    label=<<B>restaurant.pricing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_DiscountStrategy [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>DiscountStrategy</B></TD></TR></TABLE>>];
+    c_NoDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>NoDiscount</B></TD></TR></TABLE>>];
+    c_PercentageDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>PercentageDiscount</B></TD></TR></TABLE>>];
+    c_FixedAmountDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FixedAmountDiscount</B></TD></TR></TABLE>>];
+    c_BillCalculator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>BillCalculator</B></TD></TR></TABLE>>];
+  }
   subgraph cluster_model {
     label=<<B>restaurant.model</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
     c_Identifiable [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Identifiable&lt;ID&gt;</B></TD></TR></TABLE>>];
@@ -20,14 +28,6 @@ digraph UML {
     c_OrderItem [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>OrderItem</B></TD></TR></TABLE>>];
     c_Bill [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>Bill</B></TD></TR></TABLE>>];
     c_BillLine [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>BillLine</B></TD></TR></TABLE>>];
-  }
-  subgraph cluster_pricing {
-    label=<<B>restaurant.pricing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
-    c_DiscountStrategy [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>DiscountStrategy</B></TD></TR></TABLE>>];
-    c_NoDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>NoDiscount</B></TD></TR></TABLE>>];
-    c_PercentageDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>PercentageDiscount</B></TD></TR></TABLE>>];
-    c_FixedAmountDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FixedAmountDiscount</B></TD></TR></TABLE>>];
-    c_BillCalculator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>BillCalculator</B></TD></TR></TABLE>>];
   }
   c_Identifiable -> c_MenuItem [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" ID = String ", labeldistance=2.2, labelangle=-30];
   c_Identifiable -> c_Table [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" ID = Integer ", labeldistance=2.2, labelangle=-30];

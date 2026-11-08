@@ -3,19 +3,6 @@ digraph UML {
          rankdir=TB, nodesep=0.5, ranksep=0.8, newrank=true, pad=0.35, bgcolor=white];
   node [shape=plain, fontname="DejaVu Sans", fontsize=11];
   edge [fontname="DejaVu Sans", fontsize=10, color="#333333", arrowsize=0.95, labelfontsize=10, labelfontcolor="#1a1a1a"];
-  subgraph cluster_pricing {
-    label=<<B>restaurant.pricing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
-    c_BillCalculator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>BillCalculator</B></TD></TR></TABLE>>];
-  }
-  subgraph cluster_repository {
-    label=<<B>restaurant.repository</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
-    c_Repository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Repository&lt;T, ID&gt;</B></TD></TR></TABLE>>];
-    c_InMemoryRepository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>InMemoryRepository&lt;T, ID&gt;</B></TD></TR></TABLE>>];
-    c_FileMenuRepository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FileMenuRepository</B></TD></TR></TABLE>>];
-    c_SampleMenu [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«utility»</FONT><BR/><B>SampleMenu</B></TD></TR></TABLE>>];
-    c_BillArchive [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>BillArchive</B></TD></TR></TABLE>>];
-    c_FileBillArchive [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FileBillArchive</B></TD></TR></TABLE>>];
-  }
   subgraph cluster_ui {
     label=<<B>restaurant.ui</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
     c_ConsoleMenu [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ConsoleMenu</B></TD></TR></TABLE>>];
@@ -24,6 +11,28 @@ digraph UML {
       label=<<B>restaurant.ui.swing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
       c_MainWindow [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>MainWindow</B></TD></TR></TABLE>>];
     }
+  }
+  subgraph cluster_service {
+    label=<<B>restaurant.service</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_MenuService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>MenuService</B></TD></TR></TABLE>>];
+    c_TableService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>TableService</B></TD></TR></TABLE>>];
+    c_OrderService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>OrderService</B></TD></TR></TABLE>>];
+    c_CheckoutResult [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>CheckoutResult</B></TD></TR></TABLE>>];
+    c_ItemSales [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>ItemSales</B></TD></TR></TABLE>>];
+  }
+  subgraph cluster_repository {
+    label=<<B>restaurant.repository</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_Repository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Repository&lt;T extends Identifiable&lt;ID&gt;, ID&gt;</B></TD></TR></TABLE>>];
+    c_InMemoryRepository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>InMemoryRepository&lt;T extends Identifiable&lt;ID&gt;, ID&gt;</B></TD></TR></TABLE>>];
+    c_FileMenuRepository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FileMenuRepository</B></TD></TR></TABLE>>];
+    c_SampleMenu [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«utility»</FONT><BR/><B>SampleMenu</B></TD></TR></TABLE>>];
+    c_BillArchive [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>BillArchive</B></TD></TR></TABLE>>];
+    c_FileBillArchive [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FileBillArchive</B></TD></TR></TABLE>>];
+  }
+  subgraph cluster_pricing {
+    label=<<B>restaurant.pricing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_BillCalculator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>BillCalculator</B></TD></TR></TABLE>>];
+    c_DiscountStrategy [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>DiscountStrategy</B></TD></TR></TABLE>>];
   }
   subgraph cluster_common {
     label=<<B>restaurant.common</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
@@ -36,14 +45,6 @@ digraph UML {
     c_ChayGiaoDien [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ChayGiaoDien</B></TD></TR></TABLE>>];
     c_ChayConsole [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ChayConsole</B></TD></TR></TABLE>>];
     c_ChayDemo [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ChayDemo</B></TD></TR></TABLE>>];
-  }
-  subgraph cluster_service {
-    label=<<B>restaurant.service</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
-    c_MenuService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>MenuService</B></TD></TR></TABLE>>];
-    c_TableService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>TableService</B></TD></TR></TABLE>>];
-    c_OrderService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>OrderService</B></TD></TR></TABLE>>];
-    c_CheckoutResult [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>CheckoutResult</B></TD></TR></TABLE>>];
-    c_ItemSales [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>ItemSales</B></TD></TR></TABLE>>];
   }
   subgraph cluster_model {
     label=<<B>restaurant.model</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
@@ -70,6 +71,9 @@ digraph UML {
   c_MenuService -> c_Repository [arrowhead=vee, label=" -repo <MenuItem, String> ", taillabel="  ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
   c_TableService -> c_Repository [arrowhead=vee, label=" -repo <Table, Integer> ", taillabel="  ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
   c_OrderService -> c_CheckoutResult [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+  c_OrderService -> c_DiscountStrategy [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
+  c_ConsoleMenu -> c_DiscountStrategy [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
+  c_MainWindow -> c_DiscountStrategy [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
   c_OrderService -> c_ItemSales [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
   c_Repository -> c_InMemoryRepository [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25];
   c_Repository -> c_FileMenuRepository [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" T = MenuItem, ID = String ", labeldistance=2.2, labelangle=-30];

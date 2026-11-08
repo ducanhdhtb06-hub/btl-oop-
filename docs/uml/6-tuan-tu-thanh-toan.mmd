@@ -13,43 +13,43 @@ sequenceDiagram
 
     NV->>UI: chọn 7, nhập số bàn
     UI->>OS: currentOrder(tableNo)
-    OS-->>UI: order
+    OS--)UI: order
     UI->>O: isEmpty()
     break đơn chưa có món
-        UI-->>NV: "Lỗi: ... chưa có món nào" (EmptyOrderException), không hỏi giảm giá
+        UI--)NV: "Lỗi: Đơn … chưa có món nào…" (EmptyOrderException), không hỏi giảm giá
     end
     NV->>UI: chọn cách giảm giá (và số % hoặc số tiền)
     create participant DS as strategy:DiscountStrategy
-    UI->>DS: «create» new PercentageDiscount(percent)
+    UI--)DS: «create» new PercentageDiscount(percent)
     Note over UI,DS: hoặc NoDiscount / FixedAmountDiscount tùy lựa chọn
     UI->>OS: checkout(tableNo, strategy)
     OS->>OS: currentOrder(tableNo), kiểm tra đơn có món
     OS->>BC: calculate(order, strategy, now)
     BC->>O: subtotal()
-    O-->>BC: tạm tính
+    O--)BC: tạm tính
     BC->>DS: discountFor(subtotal)
-    DS-->>BC: số tiền giảm
+    DS--)BC: số tiền giảm
     BC->>O: getItems()
-    O-->>BC: các dòng món
+    O--)BC: các dòng món
     BC->>DS: label()
-    DS-->>BC: nhãn giảm giá
+    DS--)BC: nhãn giảm giá
     Note over O,T: BillCalculator tạo các BillLine và Bill (tiền giảm không âm, không quá tạm tính)
-    BC-->>OS: bill
+    BC--)OS: bill
     OS->>O: markPaid()
     OS->>O: getTable()
-    O-->>OS: table
+    O--)OS: table
     OS->>T: release()
     OS->>BA: archive(bill)
     BA->>BF: format(bill)
     alt ghi file được
-        BA-->>OS: xong
-        OS-->>UI: CheckoutResult(bill, archived = true)
+        BA--)OS: xong
+        OS--)UI: CheckoutResult(bill, archived = true)
     else ghi file lỗi (IOException)
-        BA-->>OS: ném IOException
-        OS-->>UI: CheckoutResult(bill, archived = false)
+        BA--)OS: ném IOException
+        OS--)UI: CheckoutResult(bill, archived = false)
     end
     UI->>BF: format(bill)
-    UI-->>NV: in hóa đơn
+    UI--)NV: in hóa đơn
     opt archived = false
-        UI-->>NV: "Cảnh báo: chưa lưu được hóa đơn vào file, thanh toán vẫn được ghi nhận"
+        UI--)NV: "Cảnh báo: chưa lưu được hóa đơn vào file, thanh toán vẫn được ghi nhận"
     end
