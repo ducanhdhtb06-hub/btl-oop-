@@ -1,0 +1,57 @@
+digraph UML {
+  graph [fontname="DejaVu Sans", fontsize=17, label=<<B>Biểu đồ lớp 1 - Gói model và pricing (các lớp nghiệp vụ) (bản tóm tắt: chỉ tên lớp và quan hệ)</B>>, labelloc=t, labeljust=c,
+         rankdir=TB, nodesep=0.5, ranksep=0.8, newrank=true, pad=0.35, bgcolor=white];
+  node [shape=plain, fontname="DejaVu Sans", fontsize=11];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#333333", arrowsize=0.95, labelfontsize=10, labelfontcolor="#1a1a1a"];
+  subgraph cluster_model {
+    label=<<B>restaurant.model</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_Identifiable [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>Identifiable&lt;ID&gt;</B></TD></TR></TABLE>>];
+    c_MenuItem [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«abstract»</FONT><BR/><I><B>MenuItem</B></I></TD></TR></TABLE>>];
+    c_SimpleMenuItem [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«abstract»</FONT><BR/><I><B>SimpleMenuItem</B></I></TD></TR></TABLE>>];
+    c_Food [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>Food</B></TD></TR></TABLE>>];
+    c_Drink [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>Drink</B></TD></TR></TABLE>>];
+    c_Combo [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>Combo</B></TD></TR></TABLE>>];
+    c_ItemType [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«enumeration»</FONT><BR/><B>ItemType</B></TD></TR></TABLE>>];
+    c_MenuItemFactory [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«utility»</FONT><BR/><B>MenuItemFactory</B></TD></TR></TABLE>>];
+    c_Table [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>Table</B></TD></TR></TABLE>>];
+    c_TableStatus [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«enumeration»</FONT><BR/><B>TableStatus</B></TD></TR></TABLE>>];
+    c_Order [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>Order</B></TD></TR></TABLE>>];
+    c_OrderStatus [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«enumeration»</FONT><BR/><B>OrderStatus</B></TD></TR></TABLE>>];
+    c_OrderItem [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>OrderItem</B></TD></TR></TABLE>>];
+    c_Bill [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>Bill</B></TD></TR></TABLE>>];
+    c_BillLine [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef7ee"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«record»</FONT><BR/><B>BillLine</B></TD></TR></TABLE>>];
+  }
+  subgraph cluster_pricing {
+    label=<<B>restaurant.pricing</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_DiscountStrategy [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#fff8e1"><TR><TD ALIGN="CENTER" CELLPADDING="5"><FONT POINT-SIZE="10">«interface»</FONT><BR/><B>DiscountStrategy</B></TD></TR></TABLE>>];
+    c_NoDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>NoDiscount</B></TD></TR></TABLE>>];
+    c_PercentageDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>PercentageDiscount</B></TD></TR></TABLE>>];
+    c_FixedAmountDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>FixedAmountDiscount</B></TD></TR></TABLE>>];
+    c_BillCalculator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>BillCalculator</B></TD></TR></TABLE>>];
+  }
+  c_Identifiable -> c_MenuItem [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" ID = String ", labeldistance=2.2, labelangle=-30];
+  c_Identifiable -> c_Table [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" ID = Integer ", labeldistance=2.2, labelangle=-30];
+  c_Identifiable -> c_Order [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25, headlabel=" ID = Integer ", labeldistance=2.2, labelangle=-30];
+  c_DiscountStrategy -> c_NoDiscount [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25];
+  c_DiscountStrategy -> c_PercentageDiscount [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25];
+  c_DiscountStrategy -> c_FixedAmountDiscount [dir=back, arrowtail=empty, style=dashed, arrowsize=1.25];
+  c_MenuItem -> c_SimpleMenuItem [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_SimpleMenuItem -> c_Food [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_SimpleMenuItem -> c_Drink [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_MenuItem -> c_Combo [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_Order -> c_OrderItem [dir=back, arrowtail=diamond, arrowsize=1.35, label=" -items ", taillabel=" 1 ", headlabel=" 0..* ", labeldistance=1.6, labelangle=40];
+  c_Bill -> c_BillLine [dir=back, arrowtail=diamond, arrowsize=1.35, label=" -lines ", taillabel=" 1 ", headlabel=" 0..* ", labeldistance=1.6, labelangle=40];
+  c_Combo -> c_MenuItem [dir=back, arrowtail=odiamond, arrowsize=1.35, label=" -components ", taillabel=" 0..* ", headlabel=" 1..* ", labeldistance=1.6, labelangle=40];
+  c_OrderItem -> c_MenuItem [arrowhead=vee, label=" -item ", taillabel=" 0..* ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
+  c_Order -> c_Table [arrowhead=vee, label=" -table ", taillabel=" 0..* ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
+  c_Order -> c_OrderStatus [arrowhead=vee, label=" -status ", taillabel=" 0..* ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
+  c_Table -> c_TableStatus [arrowhead=vee, label=" -status ", taillabel=" 0..* ", headlabel=" 1 ", labeldistance=1.6, labelangle=40];
+  c_MenuItem -> c_ItemType [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
+  c_MenuItemFactory -> c_Food [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+  c_MenuItemFactory -> c_Drink [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+  c_MenuItemFactory -> c_Combo [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+  c_BillCalculator -> c_Order [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
+  c_BillCalculator -> c_DiscountStrategy [style=dashed, arrowhead=vee, color="#555555", label=" «use» ", fontcolor="#444444"];
+  c_BillCalculator -> c_Bill [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+  c_BillCalculator -> c_BillLine [style=dashed, arrowhead=vee, color="#555555", label=" «create» ", fontcolor="#444444"];
+}

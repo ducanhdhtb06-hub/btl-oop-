@@ -1,31 +1,47 @@
 # Biểu đồ UML
 
-Vẽ theo đúng code hiện tại. Mỗi hình có file ảnh `.png` để chèn vào báo cáo và slide, và file nguồn để sửa.
+**Sửa hình:** mở `UML-NhaHang.drawio` bằng [app.diagrams.net](https://app.diagrams.net) (File → Open), draw.io bản cài máy, hoặc extension **Draw.io Integration** trong VS Code. File có 8 trang, mỗi biểu đồ một trang. Mọi lớp, use case, đường đời và mũi tên là đối tượng draw.io thật: kéo thả, sửa chữ, xuất PNG hoặc PDF được ngay (File → Export as).
 
-| Hình | Nội dung | File nguồn |
+**Chèn vào báo cáo, slide:** dùng các file `.png` (hoặc `.svg` để phóng to không vỡ nét).
+
+| Hình | Nội dung |
+|---|---|
+| `1-lop-model.png` | Biểu đồ lớp gói `model` và `pricing`, đủ thuộc tính và phương thức |
+| `1-lop-model-tom-tat.png` | Như trên nhưng chỉ có tên lớp và quan hệ (dùng cho slide) |
+| `2-lop-kien-truc.png` | Kiến trúc phân tầng: `restaurant` → `ui` → `service` → `repository`, `pricing` → `model`, `common` |
+| `2-lop-kien-truc-tom-tat.png` | Như trên, chỉ tên lớp và quan hệ |
+| `3-lop-ngoai-le.png` | Cây ngoại lệ: 9 lớp kế thừa `RestaurantException` (checked) và `InputClosedException` (unchecked) |
+| `4-use-case.png` | Use case: 2 tác nhân (Quản lý tổng quát hóa Nhân viên phục vụ), «include», «extend», extension points |
+| `5-tuan-tu-goi-mon.png` | Tuần tự chức năng gọi món, đủ các nhánh lỗi |
+| `6-tuan-tu-thanh-toan.png` | Tuần tự thanh toán, thấy rõ Strategy khi tính giảm giá |
+
+## Độ chính xác
+
+- Danh sách thuộc tính, phương thức, kiểu dữ liệu, tham số và mức truy cập trong biểu đồ lớp được lấy tự động từ code đã biên dịch (`javap`) và mã nguồn, không gõ tay.
+- Từng đường quan hệ trong biểu đồ lớp đã được đối chiếu với code: kế thừa và hiện thực khớp `extends`/`implements`; tên và bội số của kết hợp, tụ hợp, hợp thành khớp kiểu của thuộc tính (danh sách thì `0..*`, một đối tượng thì `1`); «use», «create», «call» khớp lời gọi trong code.
+- Biểu đồ tuần tự đi đúng thứ tự lời gọi hàm trong `ConsoleMenu`, `OrderService`, `Order`, `BillCalculator`.
+
+## Quy ước ký hiệu
+
+| Ký hiệu | Ý nghĩa | Ví dụ |
 |---|---|---|
-| `1-lop-model.png` | Biểu đồ lớp gói `model` và `pricing`: đủ 6 loại quan hệ (kế thừa 3 tầng, hiện thực interface, kết hợp, tụ hợp, hợp thành, phụ thuộc) và bội số | `1-lop-model.mmd` |
-| `2-lop-kien-truc.png` | Biểu đồ lớp kiến trúc phân tầng: ui → service → interface `Repository`, `BillArchive` → cài đặt bộ nhớ và file | `2-lop-kien-truc.mmd` |
-| `3-lop-ngoai-le.png` | Cây ngoại lệ nghiệp vụ: 9 lớp kế thừa `RestaurantException` | `3-lop-ngoai-le.mmd` |
-| `4-use-case.png` | Biểu đồ use case: 2 tác nhân (Quản lý tổng quát hóa Nhân viên phục vụ), «include», «extend» | `4-use-case.svg` |
-| `5-tuan-tu-goi-mon.png` | Biểu đồ tuần tự chức năng gọi món, có các nhánh lỗi | `5-tuan-tu-goi-mon.mmd` |
-| `6-tuan-tu-thanh-toan.png` | Biểu đồ tuần tự thanh toán, thấy rõ pattern Strategy khi tính giảm giá | `6-tuan-tu-thanh-toan.mmd` |
+| `+` `-` `#` `~` | public, private, protected, package | `~setQuantity(...)` chỉ gọi được trong gói `model` |
+| chữ gạch chân | thành viên static | `MenuItemFactory.fromCsvRow(...)` |
+| chữ nghiêng | lớp trừu tượng, phương thức trừu tượng | `MenuItem`, `getPrice()` |
+| tam giác rỗng, nét liền | kế thừa | `Food` → `SimpleMenuItem` → `MenuItem` |
+| tam giác rỗng, nét đứt | hiện thực interface | `PercentageDiscount` hiện thực `DiscountStrategy` |
+| hình thoi đặc | hợp thành | `Order` 1 ◆— 0..* `OrderItem` |
+| hình thoi rỗng | tụ hợp | `Combo` 0..* ◇— 1..* `MenuItem` |
+| mũi tên nét liền | kết hợp (tên ở giữa là tên thuộc tính trong code) | `Order` → `Table` qua thuộc tính `table` |
+| mũi tên nét đứt | phụ thuộc «use», «create», «call» | `BillCalculator` «create» `Bill` |
 
-Các ký hiệu quan hệ trong hình 1:
+Không vẽ: hàm private phụ trợ, hàm tạo mặc định do Java tự thêm, `serialVersionUID`, các hàm tự sinh của record. Ghi chú trên hình nói rõ những phần được lược cho gọn.
 
-| Quan hệ | Ví dụ trong code | Ký hiệu |
-|---|---|---|
-| Kế thừa | `Food` → `SimpleMenuItem` → `MenuItem` | mũi tên tam giác rỗng, nét liền |
-| Hiện thực | `PercentageDiscount` hiện thực `DiscountStrategy` | mũi tên tam giác rỗng, nét đứt |
-| Hợp thành | `Order` 1 ◆— 0..* `OrderItem` (OrderItem chỉ được tạo bên trong Order) | hình thoi đặc |
-| Tụ hợp | `Combo` 0..* ◇— 1..* `MenuItem` (món thành phần tồn tại độc lập) | hình thoi rỗng |
-| Kết hợp | `Order` 0..* → 1 `Table`, `OrderItem` 0..* → 1 `MenuItem` | mũi tên nét liền |
-| Phụ thuộc | `BillCalculator` dùng `DiscountStrategy`, tạo `Bill` | mũi tên nét đứt |
+## File nguồn
 
-Sửa file `.mmd`: dán vào https://mermaid.live, hoặc cài extension "Markdown Preview Mermaid Support" trong VS Code. Sửa xong xuất lại ảnh bằng lệnh:
-
-```bash
-mmdc -i 1-lop-model.mmd -o 1-lop-model.png -c mermaid-config.json -b white -s 2
-```
-
-Hình use case vẽ trực tiếp bằng SVG, mở được bằng trình duyệt, Inkscape hoặc draw.io.
+| File | Dùng để |
+|---|---|
+| `UML-NhaHang.drawio` | Sửa hình bằng draw.io (cách dễ nhất) |
+| `*.dot` | Nguồn Graphviz của biểu đồ lớp: `dot -Tpng -Gdpi=170 1-lop-model.dot -o 1-lop-model.png` |
+| `*.mmd`, `mermaid-config.json` | Nguồn Mermaid của biểu đồ tuần tự: `mmdc -i 5-tuan-tu-goi-mon.mmd -o 5-tuan-tu-goi-mon.png -c mermaid-config.json -b white -s 2 -w 1600` |
+| `4-use-case.svg` | Hình use case dạng vector |

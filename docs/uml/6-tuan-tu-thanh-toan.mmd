@@ -1,5 +1,5 @@
 ---
-title: Biểu đồ tuần tự - Thanh toán
+title: Biểu đồ tuần tự - Thanh toán (console)
 ---
 sequenceDiagram
     actor NV as Nhân viên
@@ -7,32 +7,49 @@ sequenceDiagram
     participant OS as :OrderService
     participant O as :Order
     participant BC as :BillCalculator
-    participant DS as :DiscountStrategy
     participant T as :Table
     participant BA as :BillArchive
+    participant BF as BillFormatter
 
-    NV->>UI: chọn "7. Thanh toán", nhập số bàn
+    NV->>UI: chọn 7, nhập số bàn
     UI->>OS: currentOrder(tableNo)
     OS-->>UI: order
-    Note over UI,OS: đơn rỗng: báo lỗi ngay
-    NV->>UI: chọn cách giảm giá
-    UI->>UI: new PercentageDiscount(...)
+    UI->>O: isEmpty()
+    break đơn chưa có món
+        UI-->>NV: "Lỗi: ... chưa có món nào" (EmptyOrderException), không hỏi giảm giá
+    end
+    NV->>UI: chọn cách giảm giá (và số % hoặc số tiền)
+    create participant DS as strategy:DiscountStrategy
+    UI->>DS: «create» new PercentageDiscount(percent)
+    Note over UI,DS: hoặc NoDiscount / FixedAmountDiscount tùy lựa chọn
     UI->>OS: checkout(tableNo, strategy)
+    OS->>OS: currentOrder(tableNo), kiểm tra đơn có món
     OS->>BC: calculate(order, strategy, now)
-    BC->>O: subtotal(), getItems()
-    O-->>BC: tạm tính, các dòng món
+    BC->>O: subtotal()
+    O-->>BC: tạm tính
     BC->>DS: discountFor(subtotal)
     DS-->>BC: số tiền giảm
+    BC->>O: getItems()
+    O-->>BC: các dòng món
     BC->>DS: label()
+    DS-->>BC: nhãn giảm giá
+    Note over O,T: BillCalculator tạo các BillLine và Bill (tiền giảm không âm, không quá tạm tính)
     BC-->>OS: bill
     OS->>O: markPaid()
+    OS->>O: getTable()
+    O-->>OS: table
     OS->>T: release()
     OS->>BA: archive(bill)
+    BA->>BF: format(bill)
     alt ghi file được
         BA-->>OS: xong
         OS-->>UI: CheckoutResult(bill, archived = true)
-    else lỗi ghi file (IOException)
+    else ghi file lỗi (IOException)
+        BA-->>OS: ném IOException
         OS-->>UI: CheckoutResult(bill, archived = false)
     end
+    UI->>BF: format(bill)
     UI-->>NV: in hóa đơn
-    Note over NV,UI: archived = false thì in thêm cảnh báo
+    opt archived = false
+        UI-->>NV: "Cảnh báo: chưa lưu được hóa đơn vào file, thanh toán vẫn được ghi nhận"
+    end

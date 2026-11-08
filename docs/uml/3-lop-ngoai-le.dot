@@ -1,0 +1,42 @@
+digraph UML {
+  graph [fontname="DejaVu Sans", fontsize=17, label=<<B>Biểu đồ lớp 3 - Ngoại lệ</B>>, labelloc=t, labeljust=c,
+         rankdir=TB, nodesep=0.5, ranksep=0.8, newrank=true, pad=0.35, bgcolor=white];
+  graph [rankdir=LR, ranksep=1.1, nodesep=0.25];
+  node [shape=plain, fontname="DejaVu Sans", fontsize=11];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#333333", arrowsize=0.95, labelfontsize=10, labelfontcolor="#1a1a1a"];
+  subgraph cluster_exception {
+    label=<<B>restaurant.exception</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_RestaurantException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>RestaurantException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+RestaurantException(message: String)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_MenuItemNotFoundException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>MenuItemNotFoundException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+MenuItemNotFoundException(itemId: String)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_ItemUnavailableException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ItemUnavailableException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+ItemUnavailableException(itemName: String)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_ItemNotInOrderException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>ItemNotInOrderException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+ItemNotInOrderException(itemId: String)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_InvalidQuantityException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>InvalidQuantityException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+InvalidQuantityException(quantity: int)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_EmptyOrderException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>EmptyOrderException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+EmptyOrderException(orderId: int)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_OrderClosedException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>OrderClosedException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+OrderClosedException(orderId: int, status: OrderStatus)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_NoOpenOrderException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>NoOpenOrderException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+NoOpenOrderException(tableNo: int)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_TableNotFoundException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>TableNotFoundException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+TableNotFoundException(tableNo: int)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+    c_TableNotAvailableException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>TableNotAvailableException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+TableNotAvailableException(tableNo: int)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  }
+  subgraph cluster_ui {
+    label=<<B>restaurant.ui</B>>; labeljust=l; fontsize=13; style="rounded"; color="#8a8a8a"; bgcolor="#fbfbfb"; penwidth=1.2;
+    c_InputClosedException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>InputClosedException</B></TD></TR><HR/><TR><TD CELLPADDING="1"> </TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT" CELLPADDING="5">+InputClosedException()<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  }
+  c_Exception [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>java.lang.Exception</B></TD></TR></TABLE>>];
+  c_RuntimeException [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#3a3a3a" BGCOLOR="#eef3fa"><TR><TD ALIGN="CENTER" CELLPADDING="5"><B>java.lang.RuntimeException</B></TD></TR></TABLE>>];
+  note0 [shape=note, style=filled, fillcolor="#fffde7", color="#9e9e9e", fontsize=10, margin="0.12,0.06", label=<Lỗi nghiệp vụ, loại checked: hàm có thể gây<BR/>lỗi phải khai báo throws. ConsoleMenu và<BR/>MainWindow bắt lại và báo cho người dùng>];
+  c_RestaurantException -> note0 [style=dashed, arrowhead=none, color="#9e9e9e"];
+  note1 [shape=note, style=filled, fillcolor="#fffde7", color="#9e9e9e", fontsize=10, margin="0.12,0.06", label=<Loại unchecked: InputReader ném khi hết dữ<BR/>liệu nhập, ConsoleMenu bắt để thoát>];
+  c_InputClosedException -> note1 [style=dashed, arrowhead=none, color="#9e9e9e"];
+  c_Exception -> c_RuntimeException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_Exception -> c_RestaurantException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RuntimeException -> c_InputClosedException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_MenuItemNotFoundException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_ItemUnavailableException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_ItemNotInOrderException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_InvalidQuantityException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_EmptyOrderException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_OrderClosedException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_NoOpenOrderException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_TableNotFoundException [dir=back, arrowtail=empty, arrowsize=1.25];
+  c_RestaurantException -> c_TableNotAvailableException [dir=back, arrowtail=empty, arrowsize=1.25];
+}
